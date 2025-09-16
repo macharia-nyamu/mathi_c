@@ -10,12 +10,110 @@ Mathi C is a modular C library collection providing algorithms, data structures,
 ## Project Structure
 
 Mathi C/
-├── build/ # compiled binaries and objects
-├── docs/ # additional documentation
-├── include/ # library headers
-│ └── mathi/
-└── src/ # source code files
-
+├── build/                  # compiled binaries and objects
+│   └── bin/                # compiled test binaries
+│       ├── algo_test
+│       ├── array_test
+│       ├── codec_test
+│       ├── config_test
+│       ├── conversion_test
+│       ├── crypto_test
+│       ├── ds_test
+│       ├── dsx_test
+│       ├── filex_test
+│       ├── inputx_test
+│       ├── logx_test
+│       ├── mathison_test
+│       ├── mathphy_test
+│       ├── mathx_test
+│       ├── matrix_test
+│       ├── networking_test
+│       ├── search_test
+│       ├── sort_test
+│       ├── stats_test
+│       ├── stringx_test
+│       ├── sys_test
+│       ├── timeutil_test
+│       ├── util_test
+│       └── validator_test
+├── docs/                   # additional documentation
+├── include/                # library headers
+│   └── mathi/
+│       ├── algo.h
+│       ├── array.h
+│       ├── codec.h
+│       ├── config.h
+│       ├── conversion.h
+│       ├── crypto.h
+│       ├── ds.h
+│       ├── dsx.h
+│       ├── filex.h
+│       ├── inputx.h
+│       ├── logx.h
+│       ├── mathi.h
+│       ├── mathison.h
+│       ├── mathphy.h
+│       ├── mathx.h
+│       ├── matrix.h
+│       ├── networking.h
+│       ├── search.h
+│       ├── sort.h
+│       ├── stats.h
+│       ├── stringx.h
+│       ├── sys.h
+│       ├── timeutil.h
+│       ├── util.h
+│       └── validator.h
+├── src/                    # source code files
+│   ├── algo.c
+│   ├── array.c
+│   ├── codec.c
+│   ├── config.c
+│   ├── conversion.c
+│   ├── crypto.c
+│   ├── ds.c
+│   ├── dsx.c
+│   ├── filex.c
+│   ├── inputx.c
+│   ├── logx.c
+│   ├── mathison.c
+│   ├── mathphy.c
+│   ├── mathx.c
+│   ├── matrix.c
+│   ├── networking.c
+│   ├── search.c
+│   ├── sort.c
+│   ├── stats.c
+│   ├── stringx.c
+│   ├── sys.c
+│   ├── timeutil.c
+│   ├── util.c
+│   └── validator.c
+└── tests/                  # unit tests for all modules
+    ├── algo_test.c
+    ├── array_test.c
+    ├── codec_test.c
+    ├── config_test.c
+    ├── conversion_test.c
+    ├── crypto_test.c
+    ├── ds_test.c
+    ├── dsx_test.c
+    ├── filex_test.c
+    ├── inputx_test.c
+    ├── logx_test.c
+    ├── mathison_test.c
+    ├── mathphy_test.c
+    ├── mathx_test.c
+    ├── matrix_test.c
+    ├── networking_test.c
+    ├── search_test.c
+    ├── sort_test.c
+    ├── stats_test.c
+    ├── stringx_test.c
+    ├── sys_test.c
+    ├── timeutil_test.c
+    ├── util_test.c
+    └── validator_test.c
 
 ---
 
