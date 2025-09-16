@@ -3,116 +3,185 @@
 #include <string.h>
 #include <assert.h>
 #include "mathi/ds.h"
+#include "mathi/print.h"
 
-void print_linked_list(Node *head, const char *name) {
-    printf("%s = [", name);
-    Node *current = head;
-    while(current) {
-        printf("%d", current->v);
-        if(current->next) printf(", ");
-        current = current->next;
-    }
-    printf("]\n");
-}
+void test_linked_list_add() 
+{
+    printf("Testing linked_list_add...\n");
 
-void test_linked_list() {
-    printf("Testing linked list...\n");
     Node *head = NULL;
+    mathi_linked_list_add(&head, 10);
+    mathi_linked_list_add(&head, 20);
+    mathi_linked_list_add(&head, 30);
 
-    linked_list_add(&head, 10);
-    linked_list_add(&head, 20);
-    linked_list_add(&head, 30);
-    print_linked_list(head, "linked list after adds");
-    assert(linked_list_length(head) == 3);
-    assert(linked_list_find(head, 20)->v == 20);
-
-    linked_list_remove(&head, 20);
-    print_linked_list(head, "linked list after removing 20");
-    assert(linked_list_length(head) == 2);
-    assert(linked_list_find(head, 20) == NULL);
-
-    linked_list_remove(&head, 10);
-    linked_list_remove(&head, 30);
-    print_linked_list(head, "linked list after removing all");
-    assert(linked_list_length(head) == 0);
+    mathi_prnt_linked_list(head, "After adding 10, 20, 30");
+    assert(mathi_linked_list_length(head) == 3);
 }
 
-void test_stack() {
-    printf("Testing stack...\n");
-    Stack *s = stack_new(3);
-    printf("stack is empty? %d\n", stack_is_empty(s));
+void test_linked_list_find() 
+{
+    printf("Testing linked_list_find...\n");
 
-    stack_push(s, 1);
-    stack_push(s, 2);
-    stack_push(s, 3);
-    printf("stack after pushes: top = %d\n", stack_peek(s));
+    Node *head = NULL;
+    mathi_linked_list_add(&head, 100);
+    mathi_linked_list_add(&head, 200);
 
-    stack_push(s, 4); // should not push
-    printf("stack after trying to push 4: top = %d\n", stack_peek(s));
-
-    int val = stack_pop(s);
-    printf("popped value = %d, new top = %d\n", val, stack_peek(s));
-    assert(val == 3);
-
-    assert(stack_peek(s) == 2);
-    assert(!stack_is_empty(s));
-
-    stack_pop(s);
-    stack_pop(s);
-    printf("stack after popping all: is empty? %d\n", stack_is_empty(s));
-    assert(stack_is_empty(s));
-    stack_free(s);
+    Node *found = mathi_linked_list_find(head, 200);
+    assert(found && found->v == 200);
+    printf("Found node with value 200: %p -> %d\n\n", (void*)found, found->v);
 }
 
-void test_queue() {
-    printf("Testing queue...\n");
-    Queue *q = queue_new(3);
-    printf("queue is empty? %d\n", queue_is_empty(q));
+void test_linked_list_remove() 
+{
+    printf("Testing linked_list_remove...\n");
 
-    queue_enqueue(q, 1);
-    queue_enqueue(q, 2);
-    queue_enqueue(q, 3);
-    printf("queue after enqueues: front = %d\n", queue_peek(q));
+    Node *head = NULL;
+    mathi_linked_list_add(&head, 1);
+    mathi_linked_list_add(&head, 2);
+    mathi_linked_list_add(&head, 3);
 
-    queue_enqueue(q, 4); // should not enqueue
-    printf("queue after trying to enqueue 4: front = %d\n", queue_peek(q));
+    mathi_linked_list_remove(&head, 2);
+    mathi_prnt_linked_list(head, "After removing 2");
+    assert(mathi_linked_list_find(head, 2) == NULL);
 
-    int val = queue_dequeue(q);
-    printf("dequeued value = %d\n", val);
-    val = queue_dequeue(q);
-    printf("dequeued value = %d\n", val);
-    val = queue_dequeue(q);
-    printf("dequeued value = %d\n", val);
-
-    printf("queue is empty? %d\n", queue_is_empty(q));
-    assert(queue_is_empty(q));
-    queue_free(q);
+    mathi_linked_list_remove(&head, 1);
+    mathi_linked_list_remove(&head, 3);
+    mathi_prnt_linked_list(head, "After removing all");
+    assert(mathi_linked_list_length(head) == 0);
 }
 
-void test_hash_table() {
-    printf("Testing hash table...\n");
-    Hash *h = hash_new(10);
+void test_stack_operations() 
+{
+    printf("Testing Stack Operations...\n");
 
-    hash_set(h, "one", 1);
-    hash_set(h, "two", 2);
-    hash_set(h, "three", 3);
-    printf("hash['one'] = %d\n", hash_get(h, "one"));
-    printf("hash['two'] = %d\n", hash_get(h, "two"));
-    printf("hash['three'] = %d\n", hash_get(h, "three"));
-    printf("hash['missing'] = %d\n", hash_get(h, "missing"));
+    Stack *s = mathi_stack_new(3);
+    printf("New stack created, is_empty = %d\n", mathi_stack_is_empty(s));
 
-    // overwrite existing key
-    hash_set(h, "two", 20);
-    printf("hash['two'] after overwrite = %d\n", hash_get(h, "two"));
-    hash_free(h);
+    mathi_stack_push(s, 5);
+    mathi_stack_push(s, 10);
+    mathi_stack_push(s, 15);
+    printf("After pushes: top = %d\n", mathi_stack_peek(s));
+
+    mathi_stack_push(s, 20);
+    printf("After attempting to push 20 (overflow): top = %d\n", mathi_stack_peek(s));
+
+    int val = mathi_stack_pop(s);
+    printf("Pop returned: %d, new top = %d\n", val, mathi_stack_peek(s));
+    assert(val == 15);
+    assert(mathi_stack_peek(s) == 10);
+
+    mathi_stack_pop(s);
+    mathi_stack_pop(s);
+    printf("After popping all: is_empty = %d\n\n", mathi_stack_is_empty(s));
+
+    mathi_stack_free(s);
 }
 
-int main() {
-    test_linked_list();
-    test_stack();
-    test_queue();
-    test_hash_table();
+void test_queue_operations() 
+{
+    printf("Testing Queue Operations...\n");
 
-    printf("All ds tests passed successfully!\n");
+    Queue *q = mathi_queue_new(3);
+    int val;
+    printf("New queue created, is_empty = %d\n", mathi_queue_is_empty(q));
+
+    mathi_queue_enqueue(q, 1);
+    mathi_queue_enqueue(q, 2);
+    mathi_queue_enqueue(q, 3);
+    printf("After enqueues: front = %d\n", mathi_queue_peek(q));
+
+    mathi_queue_enqueue(q, 4);
+    printf("After attempting to enqueue 4 (overflow): front = %d\n", mathi_queue_peek(q));
+
+    val = mathi_queue_dequeue(q);
+    printf("Dequeue returned: %d\n", val);
+    val = mathi_queue_dequeue(q);
+    printf("Dequeue returned: %d\n", val);
+    val = mathi_queue_dequeue(q);
+    printf("Dequeue returned: %d\n", val);
+
+    printf("After dequeueing all: is_empty = %d\n\n", mathi_queue_is_empty(q));
+    mathi_queue_free(q);
+}
+
+void test_hash_table_operations() 
+{
+    printf("Testing Hash Table Operations...\n");
+
+    Hash *h = mathi_hash_new(5);
+
+    mathi_hash_set(h, "a", 1);
+    mathi_hash_set(h, "b", 2);
+    mathi_hash_set(h, "c", 3);
+
+    printf("hash['a'] = %d\n", mathi_hash_get(h, "a"));
+    printf("hash['b'] = %d\n", mathi_hash_get(h, "b"));
+    printf("hash['c'] = %d\n", mathi_hash_get(h, "c"));
+    printf("hash['missing'] = %d\n", mathi_hash_get(h, "missing"));
+
+    mathi_hash_set(h, "b", 20);
+    printf("hash['b'] after overwrite = %d\n\n", mathi_hash_get(h, "b"));
+
+    mathi_hash_free(h);
+}
+
+void test_list_length_and_find() 
+{
+    printf("Testing list_length and list_find aliases...\n");
+
+    Node *head = NULL;
+    mathi_linked_list_add(&head, 7);
+    mathi_linked_list_add(&head, 14);
+
+    assert(mathi_list_length(head) == 2);
+    Node *found = mathi_list_find(head, 14);
+    assert(found && found->v == 14);
+    printf("list_length = %d, list_find found: %d\n\n", mathi_list_length(head), found->v);
+}
+
+void test_stack_boundaries() 
+{
+    printf("Testing Stack boundaries...\n");
+
+    Stack *s = mathi_stack_new(2);
+    mathi_stack_push(s, 1);
+    mathi_stack_push(s, 2);
+    mathi_stack_pop(s);
+    mathi_stack_pop(s);
+
+    printf("Stack after popping all: is_empty = %d\n\n", mathi_stack_is_empty(s));
+    mathi_stack_free(s);
+}
+
+void test_queue_boundaries() 
+{
+    printf("Testing Queue boundaries...\n");
+
+    Queue *q = mathi_queue_new(2);
+    mathi_queue_enqueue(q, 1);
+    mathi_queue_enqueue(q, 2);
+    mathi_queue_dequeue(q);
+    mathi_queue_dequeue(q);
+
+    printf("Queue after dequeueing all: is_empty = %d\n\n", mathi_queue_is_empty(q));
+    mathi_queue_free(q);
+}
+
+int main() 
+{
+    test_linked_list_add();
+    test_linked_list_find();
+    test_linked_list_remove();
+    test_list_length_and_find();
+
+    test_stack_operations();
+    test_stack_boundaries();
+
+    test_queue_operations();
+    test_queue_boundaries();
+
+    test_hash_table_operations();
+
+    printf("All DS tests passed successfully!\n");
     return 0;
 }

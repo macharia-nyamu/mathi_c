@@ -2,6 +2,8 @@
 * Mathi C Library - JSON Module
 * mathison.c
 * 
+* Provides a lightweight JSON structure with basic array/object/string/number/bool/null support.
+* 
 * Copyright (c) 2025 Macharia Nyamū
 * Licensed under the MIT License. See LICENSE file in the project root for details.
 */
@@ -12,9 +14,10 @@
 #include <ctype.h>
 #include <stdio.h>
 
-// --- Creation / Initialization ---
 
-MathiJSON* json_new_object() {
+// Create a new JSON object
+MathiJSON* mathison_new_object() 
+{
     MathiJSON *json = malloc(sizeof(MathiJSON));
     if (!json) return NULL;
     json->type = JSON_OBJECT;
@@ -24,7 +27,9 @@ MathiJSON* json_new_object() {
     return json;
 }
 
-MathiJSON* json_new_array() {
+// Create a new JSON array
+MathiJSON* mathison_new_array() 
+{
     MathiJSON *json = malloc(sizeof(MathiJSON));
     if (!json) return NULL;
     json->type = JSON_ARRAY;
@@ -33,15 +38,19 @@ MathiJSON* json_new_array() {
     return json;
 }
 
-MathiJSON* json_new_string(const char *value) {
+// Create a new JSON string
+MathiJSON* mathison_new_string(const char *value) 
+{
     MathiJSON *json = malloc(sizeof(MathiJSON));
     if (!json) return NULL;
     json->type = JSON_STRING;
-    json->data.str = strdup(value);
+    json->data.str = strdup(value);  // Allocate memory for string
     return json;
 }
 
-MathiJSON* json_new_number(double value) {
+// Create a new JSON number
+MathiJSON* mathison_new_number(double value) 
+{
     MathiJSON *json = malloc(sizeof(MathiJSON));
     if (!json) return NULL;
     json->type = JSON_NUMBER;
@@ -49,7 +58,9 @@ MathiJSON* json_new_number(double value) {
     return json;
 }
 
-MathiJSON* json_new_bool(bool value) {
+// Create a new JSON boolean
+MathiJSON* mathison_new_bool(bool value) 
+{
     MathiJSON *json = malloc(sizeof(MathiJSON));
     if (!json) return NULL;
     json->type = JSON_BOOL;
@@ -57,15 +68,19 @@ MathiJSON* json_new_bool(bool value) {
     return json;
 }
 
-MathiJSON* json_new_null() {
+// Create a new JSON null
+MathiJSON* mathison_new_null() 
+{
     MathiJSON *json = malloc(sizeof(MathiJSON));
     if (!json) return NULL;
     json->type = JSON_NULL;
     return json;
 }
 
-// --- Copy ---
-int json_copy(MathiJSON *source, MathiJSON **dest) {
+
+// Shallow copy of JSON object
+int mathison_copy(MathiJSON *source, MathiJSON **dest) 
+{
     if (!source || !dest) return -1;
     *dest = malloc(sizeof(MathiJSON));
     if (!*dest) return -1;
@@ -73,45 +88,61 @@ int json_copy(MathiJSON *source, MathiJSON **dest) {
     return 0;
 }
 
-// --- Memory / Cleanup ---
-int json_free(MathiJSON *json) {
+
+// Free a JSON object recursively
+int mathison_free(MathiJSON *json) 
+{
     if (!json) return -1;
 
-    if (json->type == JSON_STRING && json->data.str) free(json->data.str);
+    switch(json->type) 
+    {
+        case JSON_STRING:
+            if(json->data.str) free(json->data.str);
+            break;
 
-    else if (json->type == JSON_ARRAY && json->data.array.items) {
-        for (size_t i = 0; i < json->data.array.count; i++)
-            json_free(json->data.array.items[i]);
-        free(json->data.array.items);
-    }
+        case JSON_ARRAY:
+            for (size_t i = 0; i < json->data.array.count; i++)
+                mathison_free(json->data.array.items[i]);
+            free(json->data.array.items);
+            break;
 
-    else if (json->type == JSON_OBJECT && json->data.object.keys && json->data.object.values) {
-        for (size_t i = 0; i < json->data.object.count; i++) {
-            free(json->data.object.keys[i]);
-            json_free(json->data.object.values[i]);
-        }
-        free(json->data.object.keys);
-        free(json->data.object.values);
+        case JSON_OBJECT:
+            for (size_t i = 0; i < json->data.object.count; i++) 
+            {
+                free(json->data.object.keys[i]);
+                mathison_free(json->data.object.values[i]);
+            }
+            free(json->data.object.keys);
+            free(json->data.object.values);
+            break;
+
+        default:
+            break; // JSON_NUMBER, JSON_BOOL, JSON_NULL require no extra freeing
     }
 
     free(json);
     return 0;
 }
 
-int json_clear(MathiJSON *json_obj) {
+// Clear the contents of an array or object without freeing the container
+int mathison_clear(MathiJSON *json_obj) 
+{
     if (!json_obj) return -1;
 
-    if (json_obj->type == JSON_ARRAY) {
+    if (json_obj->type == JSON_ARRAY) 
+    {
         for (size_t i = 0; i < json_obj->data.array.count; i++)
-            json_free(json_obj->data.array.items[i]);
+            mathison_free(json_obj->data.array.items[i]);
         free(json_obj->data.array.items);
         json_obj->data.array.items = NULL;
         json_obj->data.array.count = 0;
-    }
-    else if (json_obj->type == JSON_OBJECT) {
-        for (size_t i = 0; i < json_obj->data.object.count; i++) {
+    } 
+    else if (json_obj->type == JSON_OBJECT) 
+    {
+        for (size_t i = 0; i < json_obj->data.object.count; i++) 
+        {
             free(json_obj->data.object.keys[i]);
-            json_free(json_obj->data.object.values[i]);
+            mathison_free(json_obj->data.object.values[i]);
         }
         free(json_obj->data.object.keys);
         free(json_obj->data.object.values);
@@ -122,16 +153,18 @@ int json_clear(MathiJSON *json_obj) {
     return 0;
 }
 
-// --- Type Checks ---
-bool json_is_object(MathiJSON *json_obj) { return json_obj && json_obj->type == JSON_OBJECT; }
-bool json_is_array(MathiJSON *json_obj) { return json_obj && json_obj->type == JSON_ARRAY; }
-bool json_is_string(MathiJSON *json_obj) { return json_obj && json_obj->type == JSON_STRING; }
-bool json_is_number(MathiJSON *json_obj) { return json_obj && json_obj->type == JSON_NUMBER; }
-bool json_is_bool(MathiJSON *json_obj) { return json_obj && json_obj->type == JSON_BOOL; }
-bool json_is_null(MathiJSON *json_obj) { return json_obj && json_obj->type == JSON_NULL; }
 
-// --- Array Manipulation ---
-int json_append_array(MathiJSON *json_array, MathiJSON *value) {
+bool mathison_is_object(MathiJSON *json_obj) { return json_obj && json_obj->type == JSON_OBJECT; }
+bool mathison_is_array(MathiJSON *json_obj) { return json_obj && json_obj->type == JSON_ARRAY; }
+bool mathison_is_string(MathiJSON *json_obj) { return json_obj && json_obj->type == JSON_STRING; }
+bool mathison_is_number(MathiJSON *json_obj) { return json_obj && json_obj->type == JSON_NUMBER; }
+bool mathison_is_bool(MathiJSON *json_obj) { return json_obj && json_obj->type == JSON_BOOL; }
+bool mathison_is_null(MathiJSON *json_obj) { return json_obj && json_obj->type == JSON_NULL; }
+
+
+// Append a value to a JSON array
+int mathison_append_array(MathiJSON *json_array, MathiJSON *value) 
+{
     if (!json_array || json_array->type != JSON_ARRAY || !value) return -1;
     size_t n = json_array->data.array.count;
     MathiJSON **new_items = realloc(json_array->data.array.items, (n + 1) * sizeof(MathiJSON*));
@@ -142,7 +175,9 @@ int json_append_array(MathiJSON *json_array, MathiJSON *value) {
     return 0;
 }
 
-int json_swap_array_items(MathiJSON *json_array, size_t i, size_t j) {
+// Swap two items in a JSON array
+int mathison_swap_array_items(MathiJSON *json_array, size_t i, size_t j) 
+{
     if (!json_array || json_array->type != JSON_ARRAY) return -1;
     if (i >= json_array->data.array.count || j >= json_array->data.array.count) return -1;
     MathiJSON *tmp = json_array->data.array.items[i];
@@ -151,30 +186,38 @@ int json_swap_array_items(MathiJSON *json_array, size_t i, size_t j) {
     return 0;
 }
 
-MathiJSON* json_array_get(MathiJSON *json_array, size_t index) {
+// Access an array element by index
+MathiJSON* mathison_array_get(MathiJSON *json_array, size_t index) 
+{
     if (!json_array || json_array->type != JSON_ARRAY || index >= json_array->data.array.count) return NULL;
     return json_array->data.array.items[index];
 }
 
-size_t json_array_count(MathiJSON *json_array) {
+// Count elements in a JSON array
+size_t mathison_array_count(MathiJSON *json_array) 
+{
     if (!json_array || json_array->type != JSON_ARRAY) return 0;
     return json_array->data.array.count;
 }
 
-// --- Object Manipulation (basic placeholders) ---
-int json_set_value(MathiJSON *json_obj, const char *key, MathiJSON *value) {
+
+// Set or append a key/value pair in a JSON object
+int mathison_set_value(MathiJSON *json_obj, const char *key, MathiJSON *value) 
+{
     if (!json_obj || json_obj->type != JSON_OBJECT || !key || !value) return -1;
 
-    // check if key exists, replace value if so
-    for (size_t i = 0; i < json_obj->data.object.count; i++) {
-        if (strcmp(json_obj->data.object.keys[i], key) == 0) {
-            json_free(json_obj->data.object.values[i]);
+    // Replace value if key exists
+    for (size_t i = 0; i < json_obj->data.object.count; i++) 
+    {
+        if (strcmp(json_obj->data.object.keys[i], key) == 0) 
+        {
+            mathison_free(json_obj->data.object.values[i]);
             json_obj->data.object.values[i] = value;
             return 0;
         }
     }
 
-    // key doesn't exist, append
+    // Key doesn't exist, append
     size_t n = json_obj->data.object.count;
     char **new_keys = realloc(json_obj->data.object.keys, (n + 1) * sizeof(char*));
     MathiJSON **new_values = realloc(json_obj->data.object.values, (n + 1) * sizeof(MathiJSON*));
@@ -189,10 +232,14 @@ int json_set_value(MathiJSON *json_obj, const char *key, MathiJSON *value) {
     return 0;
 }
 
-int json_get_value(MathiJSON *json_obj, const char *key, MathiJSON **value) {
+// Retrieve value by key
+int mathison_get_value(MathiJSON *json_obj, const char *key, MathiJSON **value) 
+{
     if (!json_obj || json_obj->type != JSON_OBJECT || !key || !value) return -1;
-    for (size_t i = 0; i < json_obj->data.object.count; i++) {
-        if (strcmp(json_obj->data.object.keys[i], key) == 0) {
+    for (size_t i = 0; i < json_obj->data.object.count; i++) 
+    {
+        if (strcmp(json_obj->data.object.keys[i], key) == 0) 
+        {
             *value = json_obj->data.object.values[i];
             return 0;
         }
@@ -200,25 +247,31 @@ int json_get_value(MathiJSON *json_obj, const char *key, MathiJSON **value) {
     return -1;
 }
 
-int json_remove_key(MathiJSON *json_obj, const char *key) {
+// Remove a key/value pair from object
+int mathison_remove_key(MathiJSON *json_obj, const char *key) 
+{
     if (!json_obj || json_obj->type != JSON_OBJECT || !key) return -1;
-    for (size_t i = 0; i < json_obj->data.object.count; i++) {
-        if (strcmp(json_obj->data.object.keys[i], key) == 0) {
+    for (size_t i = 0; i < json_obj->data.object.count; i++) 
+    {
+        if (strcmp(json_obj->data.object.keys[i], key) == 0) 
+        {
             free(json_obj->data.object.keys[i]);
-            json_free(json_obj->data.object.values[i]);
-            // shift remaining
-            for (size_t j = i; j < json_obj->data.object.count - 1; j++) {
+            mathison_free(json_obj->data.object.values[i]);
+            for (size_t j = i; j < json_obj->data.object.count - 1; j++) 
+            {
                 json_obj->data.object.keys[j] = json_obj->data.object.keys[j+1];
                 json_obj->data.object.values[j] = json_obj->data.object.values[j+1];
             }
             json_obj->data.object.count--;
-            // shrink arrays
-            if (json_obj->data.object.count == 0) {
+            if (json_obj->data.object.count == 0) 
+            {
                 free(json_obj->data.object.keys);
                 free(json_obj->data.object.values);
                 json_obj->data.object.keys = NULL;
                 json_obj->data.object.values = NULL;
-            } else {
+            } 
+            else 
+            {
                 json_obj->data.object.keys = realloc(json_obj->data.object.keys, json_obj->data.object.count * sizeof(char*));
                 json_obj->data.object.values = realloc(json_obj->data.object.values, json_obj->data.object.count * sizeof(MathiJSON*));
             }
@@ -228,66 +281,68 @@ int json_remove_key(MathiJSON *json_obj, const char *key) {
     return -1;
 }
 
-bool json_has_key(MathiJSON *json_obj, const char *key) {
+// Check if a key exists
+bool mathison_has_key(MathiJSON *json_obj, const char *key) {
     if (!json_obj || json_obj->type != JSON_OBJECT || !key) return false;
     for (size_t i = 0; i < json_obj->data.object.count; i++)
         if (strcmp(json_obj->data.object.keys[i], key) == 0) return true;
     return false;
 }
 
-// --- Parsing / Serialization placeholders ---
-int json_parse(const char *str, MathiJSON **json_obj) {
+
+// Basic parsing from string (supports string, number, boolean, null, empty array/object)
+int mathison_parse(const char *str, MathiJSON **json_obj) 
+{
     if (!str || !json_obj) return -1;
 
-    // skip leading whitespace
-    while (isspace(*str)) str++;
+    while (isspace(*str)) str++; // skip whitespace
 
     if (*str == '"') { // string
-        str++; // skip opening quote
+        str++;
         size_t len = 0;
         const char *start = str;
         while (*str && *str != '"') { len++; str++; }
-        if (*str != '"') return -1; // unclosed string
+        if (*str != '"') return -1;
         char *s = malloc(len + 1);
         if (!s) return -1;
         strncpy(s, start, len);
         s[len] = '\0';
-        *json_obj = json_new_string(s);
+        *json_obj = mathison_new_string(s);
         free(s);
         return *json_obj ? 0 : -1;
     }
-    else if (isdigit(*str) || *str == '-' || *str == '+') { // number
+    else if (isdigit(*str) || *str == '-' || *str == '+') 
+    {
         char *endptr;
         double val = strtod(str, &endptr);
-        if (endptr == str) return -1; // invalid number
-        *json_obj = json_new_number(val);
+        if (endptr == str) return -1;
+        *json_obj = mathison_new_number(val);
         return *json_obj ? 0 : -1;
     }
-    else if (strncmp(str, "true", 4) == 0) {
-        *json_obj = json_new_bool(true);
+    else if (strncmp(str, "true", 4) == 0) 
+    {
+        *json_obj = mathison_new_bool(true);
         return *json_obj ? 0 : -1;
     }
-    else if (strncmp(str, "false", 5) == 0) {
-        *json_obj = json_new_bool(false);
+    else if (strncmp(str, "false", 5) == 0) 
+    {
+        *json_obj = mathison_new_bool(false);
         return *json_obj ? 0 : -1;
     }
-    else if (strncmp(str, "null", 4) == 0) {
-        *json_obj = json_new_null();
+    else if (strncmp(str, "null", 4) == 0) 
+    {
+        *json_obj = mathison_new_null();
         return *json_obj ? 0 : -1;
     }
-    else if (*str == '[') { // basic empty array support
-        *json_obj = json_new_array();
-        return *json_obj ? 0 : -1;
-    }
-    else if (*str == '{') { // basic empty object support
-        *json_obj = json_new_object();
-        return *json_obj ? 0 : -1;
-    }
+    else if (*str == '[') return (*json_obj = mathison_new_array()) ? 0 : -1;
+    else if (*str == '{') return (*json_obj = mathison_new_object()) ? 0 : -1;
 
-    return -1; // unsupported / invalid
+    return -1; // invalid / unsupported
 }
 
-int json_serialize(MathiJSON *json_obj, char **output) {
+// Serialize JSON string (currently only supports string)
+int mathison_serialize(MathiJSON *json_obj, char **output) 
+{
     if (!json_obj || !output) return -1;
     if (json_obj->type != JSON_STRING) return -1;
 
@@ -299,27 +354,29 @@ int json_serialize(MathiJSON *json_obj, char **output) {
     return 0;
 }
 
-// --- Array Manipulation Extensions ---
-int json_prepend_array(MathiJSON *json_array, MathiJSON *value) {
+
+// Prepend value to array
+int mathison_prepend_array(MathiJSON *json_array, MathiJSON *value) 
+{
     if (!json_array || json_array->type != JSON_ARRAY || !value) return -1;
     size_t n = json_array->data.array.count;
     MathiJSON **new_items = realloc(json_array->data.array.items, (n + 1) * sizeof(MathiJSON*));
     if (!new_items) return -1;
-    // shift existing
-    for (size_t i = n; i > 0; i--) new_items[i] = new_items[i-1];
+    for (size_t i = n; i > 0; i--) new_items[i] = new_items[i-1]; // shift right
     new_items[0] = value;
     json_array->data.array.items = new_items;
     json_array->data.array.count++;
     return 0;
 }
 
-int json_insert_array(MathiJSON *json_array, size_t index, MathiJSON *value) {
+// Insert value at index
+int mathison_insert_array(MathiJSON *json_array, size_t index, MathiJSON *value) 
+{
     if (!json_array || json_array->type != JSON_ARRAY || !value) return -1;
     size_t n = json_array->data.array.count;
     if (index > n) return -1;
     MathiJSON **new_items = realloc(json_array->data.array.items, (n + 1) * sizeof(MathiJSON*));
     if (!new_items) return -1;
-    // shift items right from index
     for (size_t i = n; i > index; i--) new_items[i] = new_items[i-1];
     new_items[index] = value;
     json_array->data.array.items = new_items;
@@ -327,35 +384,48 @@ int json_insert_array(MathiJSON *json_array, size_t index, MathiJSON *value) {
     return 0;
 }
 
-int json_remove_array_index(MathiJSON *json_array, size_t index) {
+// Remove array element at index
+int mathison_remove_array_index(MathiJSON *json_array, size_t index) 
+{
     if (!json_array || json_array->type != JSON_ARRAY) return -1;
     if (index >= json_array->data.array.count) return -1;
-    json_free(json_array->data.array.items[index]);
-    // shift left
+    mathison_free(json_array->data.array.items[index]);
     for (size_t i = index; i < json_array->data.array.count - 1; i++)
         json_array->data.array.items[i] = json_array->data.array.items[i+1];
     json_array->data.array.count--;
-    if (json_array->data.array.count == 0) {
+    if (json_array->data.array.count == 0) 
+    {
         free(json_array->data.array.items);
         json_array->data.array.items = NULL;
-    } else {
+    } 
+    else 
+    {
         json_array->data.array.items = realloc(json_array->data.array.items, json_array->data.array.count * sizeof(MathiJSON*));
     }
     return 0;
 }
 
-int json_array_concat(MathiJSON *target_array, MathiJSON *source_array) {
+// Concatenate source array into target array
+int mathison_array_concat(MathiJSON *target_array, MathiJSON *source_array) 
+{
     if (!target_array || target_array->type != JSON_ARRAY) return -1;
     if (!source_array || source_array->type != JSON_ARRAY) return -1;
-    for (size_t i = 0; i < source_array->data.array.count; i++) {
-        // append copy of item
+
+    for (size_t i = 0; i < source_array->data.array.count; i++) 
+    {
         MathiJSON *copy_item = NULL;
-        if (json_copy(source_array->data.array.items[i], &copy_item) != 0) return -1;
-        if (json_append_array(target_array, copy_item) != 0) {
-            json_free(copy_item);
+        if (mathison_copy(source_array->data.array.items[i], &copy_item) != 0) return -1;
+        if (mathison_append_array(target_array, copy_item) != 0) 
+        {
+            mathison_free(copy_item);
             return -1;
         }
     }
     return 0;
 }
-int json_validate_type(MathiJSON *json_obj, int expected_type) { return json_obj && json_obj->type == expected_type; }
+
+// Validate JSON type
+int mathison_validate_type(MathiJSON *json_obj, int expected_type) 
+{ 
+    return json_obj && json_obj->type == expected_type; 
+}

@@ -1,9 +1,13 @@
 /**
  * Mathi C Library - Main Header
  * 
- * This header includes all core modules of the Mathi C Library, providing
- * access to algorithms, data structures, file utilities, conversions,
- * networking, system utilities, and more.
+ * This is the central header of the Mathi C Library, providing unified access 
+ * to all core modules, including data structures, algorithms, mathematical 
+ * utilities, string handling, file operations, networking, system utilities, 
+ * statistics, and printing/logging functions.
+ * 
+ * By including this header, users gain access to the full suite of Mathi C 
+ * Library functionality in a single import.
  * 
  * @file mathi.h
  * @author Macharia Nyamū
@@ -16,36 +20,124 @@
 #ifndef MATHI_MATHI_H
 #define MATHI_MATHI_H
 
-/* ---------------- Fundamental / Core ---------------- */
-#include "util.h"       // Core utilities used by many modules
-#include "validator.h"  // Validation helpers for input and data
-#include "array.h"      // Basic array utilities
-#include "algo.h"       // Algorithm utilities (sorting, searching)
-#include "ds.h"         // Core data structures (linked list, stack, queue, hash)
-#include "dsx.h"        // Advanced / generic data structures (heap, graph, trie, hashmap)
-#include "mathx.h"      // Mathematical extensions (basic math functions)
-#include "mathphy.h"    // Physical / scientific math functions
 
-/* ---------------- Conversion & Codec ---------------- */
-#include "conversion.h" // Number/string conversions
-#include "codec.h"      // Encoding/decoding (Base64, RLE, etc.)
-#include "crypto.h"     // Crypto functions (hashes, checksum, XOR cipher)
+/**
+ * @brief Core utilities and helpers
+ */
+#include "util.h"       
 
-/* ---------------- Input / Config ---------------- */
-#include "inputx.h"     // Input handling
-#include "config.h"     // Configuration files
+/**
+ * @brief Validation helpers for input and data
+ */
+#include "validator.h"  
 
-/* ---------------- File, Logging, System ---------------- */
-#include "filex.h"      // File utilities
-#include "logx.h"       // Logging
-#include "sys.h"        // System utilities
+/**
+ * @brief Basic array utilities (search, manipulation, printing)
+ */
+#include "array.h"      
 
-/* ---------------- Higher-level modules ---------------- */
-#include "sort.h"       // Sorting (relies on arrays / algo)
-#include "search.h"     // Searching (relies on arrays / algo)
-#include "stats.h"      // Statistical functions (arrays / math)
-#include "matrix.h"     // Matrix utilities (arrays / math)
-#include "networking.h" // Networking utilities
-#include "stringx.h"    // String extensions (may use validator/util)
+/**
+ * @brief Algorithms: sorting, searching, and related functions
+ */
+#include "algo.h"       
 
-#endif
+/**
+ * @brief Core data structures: linked list, stack, queue, hash
+ */
+#include "ds.h"         
+
+/**
+ * @brief Advanced/generic data structures: heap, graph, trie, hashmap
+ */
+#include "dsx.h"        
+
+/**
+ * @brief Mathematical extensions (basic math functions)
+ */
+#include "mathx.h"      
+
+/**
+ * @brief Physical/scientific math functions
+ */
+#include "mathphy.h"    
+
+
+/**
+ * @brief Number/string conversions
+ */
+#include "conversion.h" 
+
+/**
+ * @brief Encoding/decoding utilities (Base64, RLE, etc.)
+ */
+#include "codec.h"      
+
+/**
+ * @brief Cryptographic utilities (hashes, checksum, XOR cipher)
+ */
+#include "crypto.h"     
+
+
+/**
+ * @brief Input handling utilities
+ */
+#include "inputx.h"     
+
+/**
+ * @brief Configuration file parsing and handling
+ */
+#include "config.h"     
+
+
+/**
+ * @brief File utilities (read, write, copy, etc.)
+ */
+#include "filex.h"      
+
+/**
+ * @brief Logging utilities
+ */
+#include "logx.h"       
+
+/**
+ * @brief System utilities (environment, sleep, timestamp, memory)
+ */
+#include "sys.h"        
+
+
+/**
+ * @brief Sorting utilities (built on arrays and algorithms)
+ */
+#include "sort.h"       
+
+/**
+ * @brief Searching utilities (built on arrays and algorithms)
+ */
+#include "search.h"     
+
+/**
+ * @brief Statistical functions for arrays and numerical data
+ */
+#include "stats.h"      
+
+/**
+ * @brief Matrix utilities (arrays and math)
+ */
+#include "matrix.h"     
+
+/**
+ * @brief Networking utilities (TCP/UDP)
+ */
+#include "networking.h" 
+
+/**
+ * @brief String manipulation extensions
+ */
+#include "stringx.h"    
+
+/**
+ * @brief Printing utilities for arrays, matrices, linked lists, bytes, strings
+ */
+#include "print.h"      
+
+#endif // MATHI_MATHI_H

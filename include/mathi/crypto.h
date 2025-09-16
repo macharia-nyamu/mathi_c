@@ -1,59 +1,49 @@
-/**
- * Mathi C Library - Cryptography Utilities
- * 
- * This header provides basic cryptography and hashing functions, including
- * SHA-256, MD5, XOR cipher, and simple checksums.
- * 
- * Status codes:
- * 0 - SUCCESS
- * 1 - MEMORY_ERROR
- * 2 - INVALID_INPUT
- * 3 - UNKNOWN_ERROR
- * 
- * @file crypto.h
- * @author Macharia Nyamū
- * @date 2025
- * @license MIT
- * 
- * Licensed under the MIT License. You may obtain a copy of the License at
- * https://opensource.org/licenses/MIT
- */
+/*
+* Mathi C Library - Crypto Utilities
+* Copyright (c) 2025 Macharia Nyamū
+* Licensed under the MIT License. See LICENSE file in the project root for details.
+*/
 
 #ifndef MATHI_CRYPTO_H
 #define MATHI_CRYPTO_H
 
-#include <stddef.h>
+#include <stddef.h>  // for size_t
 
 /**
- * @brief Compute the SHA-256 hash of a string.
+ * @file mathi/crypto.h
+ * @brief Basic cryptography utilities: hashing, XOR cipher, checksums.
+ */
+
+/**
+ * @brief Compute SHA-256 hash (placeholder implementation).
  * @param input Null-terminated input string.
- * @param output Buffer to store the resulting hash (must be preallocated).
- * @return Status code (0 = SUCCESS, 1 = MEMORY_ERROR, 2 = INVALID_INPUT, 3 = UNKNOWN_ERROR).
+ * @param output Buffer to store resulting hash string (must be preallocated).
+ * @return 0 on success, 2 on invalid input.
  */
-int sha256_hash(const char *input, char *output);
+int mathi_hash_sha256(const char *input, char *output);
 
 /**
- * @brief Compute the MD5 hash of a string.
+ * @brief Compute MD5 hash (placeholder implementation).
  * @param input Null-terminated input string.
- * @param output Buffer to store the resulting hash (must be preallocated).
- * @return Status code (0 = SUCCESS, 1 = MEMORY_ERROR, 2 = INVALID_INPUT, 3 = UNKNOWN_ERROR).
+ * @param output Buffer to store resulting hash string (must be preallocated).
+ * @return 0 on success, 2 on invalid input.
  */
-int md5_hash(const char *input, char *output);
+int mathi_hash_md5(const char *input, char *output);
 
 /**
- * @brief Apply a simple XOR cipher to a string in-place.
- * @param data String to encrypt/decrypt.
- * @param key Single-character XOR key.
- * @return Status code (0 = SUCCESS, 1 = MEMORY_ERROR, 2 = INVALID_INPUT, 3 = UNKNOWN_ERROR).
+ * @brief XOR encrypt/decrypt a string with a single-byte key.
+ * @param data Null-terminated string to process (modified in place).
+ * @param key XOR key.
+ * @return 0 on success, 2 on invalid input.
  */
-int xor_cipher(char *data, char key);
+int mathi_xor_cipher(char *data, char key);
 
 /**
- * @brief Compute a simple checksum of data.
+ * @brief Compute a simple checksum (sum of bytes modulo 256).
  * @param data Input byte array.
- * @param len Length of input data.
- * @return Checksum as an integer.
+ * @param len Length of the array.
+ * @return Checksum (0–255), or 2 if input is NULL.
  */
-int simple_checksum(const unsigned char *data, size_t len);
+int mathi_checksum(const unsigned char *data, size_t len);
 
-#endif
+#endif // MATHI_CRYPTO_H

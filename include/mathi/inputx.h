@@ -1,72 +1,62 @@
-/**
+/*
  * Mathi C Library - Input Utilities
- * 
- * This header provides functions for safely reading and parsing user input,
- * including integers, doubles, binary strings, hexadecimal strings, and general strings.
- * Each function returns an InputResult struct containing a status code and the parsed value.
- * 
- * Input codes:
- * 0 - INPUT_OK: Success
- * 1 - INPUT_EMPTY: Input is empty
- * 2 - INPUT_INVALID_INT: Expected an integer
- * 3 - INPUT_INVALID_DOUBLE: Expected a number
- * 4 - INPUT_INVALID_BINARY: Expected 0/1 only
- * 5 - INPUT_INVALID_HEX: Expected 0-9, A-F only
- * 6 - INPUT_UNKNOWN: Unknown error
- * 
- * @file inputx.h
- * @author Macharia Nyamū
- * @date 2025
- * @license MIT
- * 
- * Licensed under the MIT License. You may obtain a copy of the License at
- * https://opensource.org/licenses/MIT
+ * Copyright (c) 2025 Macharia Nyamū
+ * Licensed under the MIT License. See LICENSE file in the project root for details.
+ *
+ * Provides safe user input functions: integer, double, binary, hex, and string input.
  */
 
 #ifndef MATHI_INPUTX_H
 #define MATHI_INPUTX_H
 
-/** Structure to hold parsed input and status code */
+#include <stddef.h>
+
+#define INPUT_OK              0
+#define INPUT_EMPTY           1
+#define INPUT_INVALID_INT     2
+#define INPUT_INVALID_DOUBLE  3
+#define INPUT_INVALID_BINARY  4
+#define INPUT_INVALID_HEX     5
+
 typedef struct {
-    int code;       /**< Status code of input */
-    void *value;    /**< Pointer to parsed value (int*, double*, char*, etc.) */
+    int code;   /**< Status code: 0 = OK, >0 = error */
+    void *value;/**< Pointer to value (int*, double*, or char*) */
 } InputResult;
 
-/* --- Input Functions --- */
 
 /**
- * @brief Get an integer input from the user.
- * @param prompt Prompt string to display.
- * @return InputResult struct containing status code and parsed integer.
+ * @brief Prompt the user and read an integer.
+ * @param prompt Message to display
+ * @return InputResult containing status and pointer to int
  */
-InputResult get_int(const char *prompt);
+InputResult mathi_get_int(const char *prompt);
 
 /**
- * @brief Get a double input from the user.
- * @param prompt Prompt string to display.
- * @return InputResult struct containing status code and parsed double.
+ * @brief Prompt the user and read a double.
+ * @param prompt Message to display
+ * @return InputResult containing status and pointer to double
  */
-InputResult get_double(const char *prompt);
+InputResult mathi_get_double(const char *prompt);
 
 /**
- * @brief Get a binary string input from the user.
- * @param prompt Prompt string to display.
- * @return InputResult struct containing status code and parsed binary string.
+ * @brief Prompt the user and read a binary string (e.g., "10101").
+ * @param prompt Message to display
+ * @return InputResult containing status and pointer to string
  */
-InputResult get_binary(const char *prompt);
+InputResult mathi_get_binary(const char *prompt);
 
 /**
- * @brief Get a hexadecimal string input from the user.
- * @param prompt Prompt string to display.
- * @return InputResult struct containing status code and parsed hexadecimal string.
+ * @brief Prompt the user and read a hexadecimal string (e.g., "1A3F").
+ * @param prompt Message to display
+ * @return InputResult containing status and pointer to string
  */
-InputResult get_hex(const char *prompt);
+InputResult mathi_get_hex(const char *prompt);
 
 /**
- * @brief Get a general string input from the user.
- * @param prompt Prompt string to display.
- * @return InputResult struct containing status code and input string.
+ * @brief Prompt the user and read a string.
+ * @param prompt Message to display
+ * @return InputResult containing status and pointer to string
  */
 InputResult get_string(const char *prompt);
 
-#endif
+#endif // MATHI_INPUTX_H

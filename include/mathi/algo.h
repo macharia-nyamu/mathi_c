@@ -1,87 +1,62 @@
-/**
- * Mathi C Library - Algorithm Utilities
- * 
- * This header provides common algorithmic functions for arrays and numbers,
- * including Fibonacci calculation, factorials, array rotation, sorting checks,
- * digit operations, and element counting.
- * 
- * @file algo.h
- * @author Macharia Nyamū
- * @date 2025
- * @license MIT
- * 
- * Licensed under the MIT License. You may obtain a copy of the License at
- * https://opensource.org/licenses/MIT
- */
+/*
+* Mathi C Library - Math Utilities
+* Copyright (c) 2025 Macharia Nyamū
+* Licensed under the MIT License. See LICENSE file in the project root for details.
+*/
 
-#ifndef MATHI_ALGO_H
-#define MATHI_ALGO_H
+#ifndef MATHI_MATH_H
+#define MATHI_MATH_H
+
+#include <stddef.h>  // for size_t
+#include <stdlib.h>  // for abs()
 
 /**
- * @brief Compute the nth Fibonacci number.
- * @param n The position in the Fibonacci sequence.
- * @return The nth Fibonacci number.
+ * @file mathi/math.h
+ * @brief Math utility functions: Fibonacci, factorial, digit operations.
  */
-int fibonacci(int n);
 
 /**
- * @brief Count occurrences of a value in an array.
- * @param arr The array to search.
- * @param n The size of the array.
- * @param value The value to count.
- * @return The number of times value appears in arr.
+ * @brief Compute the n-th Fibonacci number.
+ * @param n Index of the Fibonacci sequence (0-based).
+ * @return n-th Fibonacci number.
  */
-int count_occurrences(int arr[], int n, int value);
+int mathi_fibonacci(int n);
 
 /**
- * @brief Rotate an array k positions to the right.
- * @param arr The array to rotate.
- * @param n The size of the array.
- * @param k Number of positions to rotate.
+ * @brief Count the occurrences of a value in an integer array.
+ * @param arr Array to search.
+ * @param n Size of the array.
+ * @param value Value to count.
+ * @return Number of occurrences of value in arr.
  */
-void rotate_array(int *arr, int n, int k);
+int mathi_occurs(const int *restrict arr, size_t n, int value);
 
 /**
- * @brief Compute factorial iteratively.
- * @param n The number to compute factorial for.
- * @return Factorial of n.
+ * @brief Compute factorial of a number iteratively.
+ * @param n Non-negative integer.
+ * @return Factorial of n, or -1 if n < 0.
  */
-int factorial_iterative(int n);
+int mathi_factorial_iterative(int n);
 
 /**
- * @brief Compute factorial recursively.
- * @param n The number to compute factorial for.
- * @return Factorial of n.
+ * @brief Compute factorial of a number recursively.
+ * @param n Non-negative integer.
+ * @return Factorial of n, or -1 if n < 0.
  */
-int factorial_recursive(int n);
+int mathi_factorial_recursive(int n);
 
 /**
- * @brief Check if an array is sorted in ascending order.
- * @param arr The array to check.
- * @param n The size of the array.
- * @return 1 if sorted, 0 otherwise.
+ * @brief Compute the sum of digits of an integer.
+ * @param n Integer value.
+ * @return Sum of digits of n.
  */
-int is_sorted(int *arr, int n);
+int mathi_dgts_sum(int n);
 
 /**
- * @brief Compute the nth Fibonacci number (alternate method).
- * @param n The position in the Fibonacci sequence.
- * @return The nth Fibonacci number.
+ * @brief Compute the root digital (single-digit sum) of an integer.
+ * @param n Integer value.
+ * @return Root digital of n.
  */
-int nth_fibonacci(int n);
+int mathi_rt_digital(int n);
 
-/**
- * @brief Compute the sum of digits of a number.
- * @param n The number to sum digits of.
- * @return Sum of digits.
- */
-int sum_of_digits(int n);
-
-/**
- * @brief Compute the digital root of a number.
- * @param n The number to find digital root for.
- * @return Digital root of n.
- */
-int digital_root(int n);
-
-#endif
+#endif // MATHI_MATH_H

@@ -1,58 +1,49 @@
-/**
+/*
  * Mathi C Library - Logging Utilities
- * 
- * This header provides structured logging functions for informational, warning,
- * and error messages. Logs can optionally be written to a specified file.
- * 
- * Status codes:
- * 0 - SUCCESS
- * 1 - FILE_ERROR
- * 2 - INVALID_INPUT
- * 3 - UNKNOWN_ERROR
- * 
- * @file logx.h
- * @author Macharia Nyamū
- * @date 2025
- * @license MIT
- * 
- * Licensed under the MIT License. You may obtain a copy of the License at
- * https://opensource.org/licenses/MIT
+ * Copyright (c) 2025 Macharia Nyamū
+ * Licensed under the MIT License. See LICENSE file in the project root for details.
  */
 
 #ifndef MATHI_LOGX_H
 #define MATHI_LOGX_H
 
-#include <stdarg.h>
+/**
+ * @file mathi/logx.h
+ * @brief Logging functions (info, warn, error) with optional file output.
+ */
+
+/* Status codes */
+#define LOG_SUCCESS   0
+#define LOG_FILE_ERROR 1
+#define LOG_INVALID_PATH 2
+
+
+/**
+ * @brief Set the file to which logs should be written.
+ * @param path File path.
+ * @return LOG_SUCCESS on success, LOG_FILE_ERROR if file can't be opened, LOG_INVALID_PATH if path is NULL.
+ */
+int mathi_set_log_file(const char *path);
 
 /**
  * @brief Log an informational message.
- * @param fmt printf-style format string.
- * @param ... Arguments corresponding to the format string.
- * @return Status code (0 = SUCCESS, 1 = FILE_ERROR, 2 = INVALID_INPUT, 3 = UNKNOWN_ERROR).
+ * @param fmt Format string (like printf).
+ * @return LOG_SUCCESS
  */
-int log_info(const char *fmt, ...);
+int mathi_log_info(const char *fmt, ...);
 
 /**
  * @brief Log a warning message.
- * @param fmt printf-style format string.
- * @param ... Arguments corresponding to the format string.
- * @return Status code (0 = SUCCESS, 1 = FILE_ERROR, 2 = INVALID_INPUT, 3 = UNKNOWN_ERROR).
+ * @param fmt Format string (like printf).
+ * @return LOG_SUCCESS
  */
-int log_warn(const char *fmt, ...);
+int mathi_log_warn(const char *fmt, ...);
 
 /**
  * @brief Log an error message.
- * @param fmt printf-style format string.
- * @param ... Arguments corresponding to the format string.
- * @return Status code (0 = SUCCESS, 1 = FILE_ERROR, 2 = INVALID_INPUT, 3 = UNKNOWN_ERROR).
+ * @param fmt Format string (like printf).
+ * @return LOG_SUCCESS
  */
-int log_error(const char *fmt, ...);
+int mathi_log_error(const char *fmt, ...);
 
-/**
- * @brief Set the file path to write logs to.
- * @param path Path to the log file.
- * @return Status code (0 = SUCCESS, 1 = FILE_ERROR, 2 = INVALID_INPUT, 3 = UNKNOWN_ERROR).
- */
-int set_log_file(const char *path);
-
-#endif
+#endif // MATHI_LOGX_H

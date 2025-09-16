@@ -1,73 +1,118 @@
 /*
-* Mathi C Library
-* Copyright (c) 2025 Macharia Nyamū
-* Licensed under the MIT License. See LICENSE file in the project root for details.
-*/
+ * Mathi C Library
+ * Copyright (c) 2025 Macharia Nyamū
+ * Licensed under the MIT License. See LICENSE file in the project root for details.
+ *
+ * A lightweight C library providing common mathematical functions.
+ */
 
 #include <stdio.h>
 #include <stdlib.h>
 
-int fibonacci(int n) {
-    if(n <= 1) return n;
-    int a = 0, b = 1, c, i;
-    for(i = 2; i <= n; i++) {
+/**
+ * @brief Compute the nth Fibonacci number.
+ * @param n Index in the Fibonacci sequence (n >= 0)
+ * @return Fibonacci number at index n
+ */
+int mathi_fibonacci(int n)
+{
+    if (n <= 1) 
+        return n;
+
+    int a = 0, b = 1, c;
+
+    for (int i = 2; i <= n; i++)
+    {
         c = a + b;
         a = b;
         b = c;
     }
+
     return b;
 }
 
-int count_occurrences(int arr[], int n, int value) {
+/**
+ * @brief Count how many times a value occurs in an array.
+ * @param arr Array of integers
+ * @param n Number of elements in arr
+ * @param value Value to count
+ * @return Number of occurrences of value in arr
+ */
+int mathi_occurs(int arr[], int n, int value)
+{
     int count = 0;
-    for(int i = 0; i < n; i++) if(arr[i] == value) count++;
+
+    for (int i = 0; i < n; i++)
+        if (arr[i] == value)
+            count++;
+
     return count;
 }
 
-void rotate_array(int *arr, int n, int k) {
-    k = k % n;
-    if(k == 0) return;
-    int *tmp = (int*)malloc(k * sizeof(int));
-    for(int i = 0; i < k; i++) tmp[i] = arr[n - k + i];
-    for(int i = n - 1; i >= k; i--) arr[i] = arr[i - k];
-    for(int i = 0; i < k; i++) arr[i] = tmp[i];
-    free(tmp);
-}
+/**
+ * @brief Compute factorial iteratively.
+ * @param n Non-negative integer
+ * @return Factorial of n, or -1 if n < 0
+ */
+int mathi_factorial_iterative(int n)
+{
+    if (n < 0) 
+        return -1;
 
-int factorial_iterative(int n) {
-    if(n < 0) return -1;
     int res = 1;
-    for(int i = 2; i <= n; i++) res *= i;
+
+    for (int i = 2; i <= n; i++)
+        res *= i;
+
     return res;
 }
 
-int factorial_recursive(int n) {
-    if(n < 0) return -1;
-    if(n == 0 || n == 1) return 1;
-    return n * factorial_recursive(n - 1);
+/**
+ * @brief Compute factorial recursively.
+ * @param n Non-negative integer
+ * @return Factorial of n, or -1 if n < 0
+ */
+int mathi_factorial_recursive(int n)
+{
+    if (n < 0) 
+        return -1;
+
+    if (n == 0 || n == 1) 
+        return 1;
+
+    return n * mathi_factorial_recursive(n - 1);
 }
 
-int is_sorted(int *arr, int n) {
-    for(int i = 0; i < n - 1; i++) if(arr[i] > arr[i + 1]) return 0;
-    return 1;
-}
-
-int nth_fibonacci(int n) {
-    return fibonacci(n);
-}
-
-int sum_of_digits(int n) {
+/**
+ * @brief Sum the digits of an integer.
+ * @param n Integer
+ * @return Sum of digits of n
+ */
+int mathi_dgts_sum(int n)
+{
     int sum = 0;
-    n = abs(n);
-    while(n) {
-        sum += n % 10;
-        n /= 10;
+    n = abs(n); // make n positive
+
+    while (n)
+    {
+        sum += n % 10;  // add last digit
+        n /= 10;        // remove last digit
     }
+
     return sum;
 }
 
-int digital_root(int n) {
+/**
+ * @brief Compute the repeated digital root of an integer.
+ * @param n Integer
+ * @return Single-digit result obtained by summing digits repeatedly
+ */
+int mathi_rt_digital(int n)
+{
     n = abs(n);
-    while(n >= 10) n = sum_of_digits(n);
+
+    while (n >= 10)
+        n = mathi_dgts_sum(n); // reduce to single digit
+
     return n;
 }

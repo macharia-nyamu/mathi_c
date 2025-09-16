@@ -1,70 +1,73 @@
-/**
- * Mathi C Library - Conversion Utilities
- * 
- * This header provides functions for converting between different numeric
- * representations (binary, decimal, hexadecimal) and for converting numbers
- * to and from strings.
- * 
- * @file conversion.h
- * @author Macharia Nyamū
- * @date 2025
- * @license MIT
- * 
- * Licensed under the MIT License. You may obtain a copy of the License at
- * https://opensource.org/licenses/MIT
- */
+/*
+* Mathi C Library - Conversion Utilities
+* Copyright (c) 2025 Macharia Nyamū
+* Licensed under the MIT License. See LICENSE file in the project root for details.
+*/
 
 #ifndef MATHI_CONVERSION_H
 #define MATHI_CONVERSION_H
 
-/**
- * @brief Convert a binary string to decimal integer.
- * @param bin Null-terminated binary string.
- * @return Decimal integer value.
- */
-int binary_to_decimal(const char *bin);
+#include <stddef.h>  // for size_t
 
 /**
- * @brief Convert a decimal integer to binary string.
- * @param num Decimal integer.
- * @param buffer Buffer to store null-terminated binary string (must be preallocated).
+ * @file mathi/conversion.h
+ * @brief Number and string conversion utilities.
  */
-void decimal_to_binary(int num, char *buffer);
 
 /**
- * @brief Convert a hexadecimal string to decimal integer.
- * @param hex Null-terminated hexadecimal string.
- * @return Decimal integer value.
+ * @brief Convert binary string to decimal integer.
+ * @param bin Binary string (e.g., "1010").
+ * @param result Pointer to store the result.
+ * @return 0 on success, 1 on memory error, 2 on invalid input.
  */
-int hex_to_decimal(const char *hex);
+int mathi_bin_to_dcm(const char *bin, int *result);
 
 /**
- * @brief Convert a decimal integer to hexadecimal string.
- * @param num Decimal integer.
- * @param buffer Buffer to store null-terminated hexadecimal string (must be preallocated).
- */
-void decimal_to_hex(int num, char *buffer);
-
-/**
- * @brief Convert an integer to string.
+ * @brief Convert decimal integer to binary string.
  * @param num Integer to convert.
- * @param buffer Buffer to store null-terminated string (must be preallocated).
- * @return Pointer to the buffer.
+ * @param out Pointer to allocated string for the result.
+ * @return 0 on success, 1 on memory error, 2 on invalid input.
  */
-char *int_to_string(int num, char *buffer);
+int mathi_dcm_to_bin(int num, char **out);
 
 /**
- * @brief Convert a string to integer.
- * @param str Null-terminated string representing an integer.
- * @return Integer value.
+ * @brief Convert hexadecimal string to decimal integer.
+ * @param hex Hex string (e.g., "1A3F").
+ * @param result Pointer to store the result.
+ * @return 0 on success, 1 on memory error, 2 on invalid input.
  */
-int string_to_int(const char *str);
+int mathi_hex_to_dcm(const char *hex, int *result);
 
 /**
- * @brief Convert a string to double.
- * @param str Null-terminated string representing a floating-point number.
- * @return Double value.
+ * @brief Convert decimal integer to hexadecimal string.
+ * @param num Integer to convert.
+ * @param out Pointer to allocated string for the result.
+ * @return 0 on success, 1 on memory error, 2 on invalid input.
  */
-double string_to_double(const char *str);
+int mathi_dcm_to_hex(int num, char **out);
 
-#endif
+/**
+ * @brief Convert integer to string.
+ * @param num Integer to convert.
+ * @param out Pointer to allocated string for the result.
+ * @return 0 on success, 1 on memory error, 2 on invalid input.
+ */
+int mathi_int_to_str(int num, char **out);
+
+/**
+ * @brief Convert string to integer.
+ * @param str Input string.
+ * @param result Pointer to store the integer result.
+ * @return 0 on success, 2 on invalid input.
+ */
+int mathi_str_to_int(const char *str, int *result);
+
+/**
+ * @brief Convert string to double.
+ * @param str Input string.
+ * @param result Pointer to store the double result.
+ * @return 0 on success, 2 on invalid input.
+ */
+int mathi_str_to_dbl(const char *str, double *result);
+
+#endif // MATHI_CONVERSION_H

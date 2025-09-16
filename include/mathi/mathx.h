@@ -1,123 +1,88 @@
-/**
+/*
  * Mathi C Library - Math Utilities
+ * mathi_math.h
  * 
- * Provides basic mathematical routines: factorial, powers, GCD/LCM, primes, square roots, and min/max functions.
- * 
- * Status codes:
- * 0 - SUCCESS
- * 1 - INVALID_INPUT
- * 2 - UNKNOWN_ERROR
- * 
- * @file mathx.h
- * @author Macharia Nyamū
- * @date 2025
- * @license MIT
- * 
- * Licensed under the MIT License. You may obtain a copy of the License at
- * https://opensource.org/licenses/MIT
+ * Copyright (c) 2025 Macharia Nyamū
+ * Licensed under the MIT License. See LICENSE file in the project root for details.
  */
 
-#ifndef MATHI_MATHX_H
-#define MATHI_MATHX_H
-
-/* ----- Basic Math Functions ----- */
+#ifndef MATHI_MATH_H
+#define MATHI_MATH_H
 
 /**
- * @brief Compute factorial of n (n!).
- * @param n Non-negative integer
- * @return Factorial value, or -1 for invalid input
+ * @file mathi/math.h
+ * @brief Basic mathematical utilities: GCD, LCM, factorial, powers, primes, sqrt, and min/max functions.
  */
-double factorial(int n);
+
 
 /**
- * @brief Compute base raised to the exponent exp (base^exp).
- * @param base Base value
- * @param exp Exponent
- * @return Result of base^exp
+ * @brief Compute the greatest common divisor (GCD) of two integers.
  */
-double power(double base, int exp);
+int mathi_gcd(int a, int b);
 
 /**
- * @brief Compute greatest common divisor of a and b.
- * @param a First integer
- * @param b Second integer
- * @return GCD of a and b
+ * @brief Compute the least common multiple (LCM) of two integers.
  */
-int gcd(int a, int b);
+int mathi_lcm(int a, int b);
 
 /**
- * @brief Compute least common multiple of a and b.
- * @param a First integer
- * @param b Second integer
- * @return LCM of a and b
+ * @brief Compute factorial of a non-negative integer.
+ * @return -1 if n < 0.
  */
-int lcm(int a, int b);
+double mathi_factorial(int n);
+
+/**
+ * @brief Compute integer power of a base.
+ */
+double mathi_power(double base, int exp);
 
 /**
  * @brief Check if a number is prime.
- * @param n Integer to check
- * @return 1 if prime, 0 otherwise
+ * @return 1 if prime, 0 otherwise.
  */
-int is_prime(int n);
+int mathi_prime(int n);
 
 /**
- * @brief Find the next prime number after n.
- * @param n Integer input
- * @return Next prime number
+ * @brief Find the next prime number greater than n.
  */
-int next_prime(int n);
+int mathi_next_prime(int n);
+
+/* --- Floating Point / General Math --- */
 
 /**
- * @brief Compute square root of x using Newton's method.
- * @param x Input value
- * @return Square root of x
+ * @brief Compute the square root of a number.
+ * @return -1 if x < 0.
  */
-double sqrt_newton(double x);
+double mathi_sqrt(double x);
 
 /**
  * @brief Compute absolute value of a double.
- * @param x Input value
- * @return Absolute value
  */
-double abs_double(double x);
+double mathi_abs_double(double x);
 
 /**
  * @brief Compute absolute value of an integer.
- * @param x Input integer
- * @return Absolute value
  */
-int abs_int(int x);
+int mathi_abs_int(int x);
 
 /**
  * @brief Return maximum of two integers.
- * @param a First integer
- * @param b Second integer
- * @return Maximum value
  */
-int max_int(int a, int b);
+int mathi_max_int(int a, int b);
 
 /**
  * @brief Return minimum of two integers.
- * @param a First integer
- * @param b Second integer
- * @return Minimum value
  */
-int min_int(int a, int b);
+int mathi_min_int(int a, int b);
 
 /**
  * @brief Return maximum of two doubles.
- * @param a First value
- * @param b Second value
- * @return Maximum value
  */
-double max_double(double a, double b);
+double mathi_max_double(double a, double b);
 
 /**
  * @brief Return minimum of two doubles.
- * @param a First value
- * @param b Second value
- * @return Minimum value
  */
-double min_double(double a, double b);
+double mathi_min_double(double a, double b);
 
-#endif
+#endif // MATHI_MATH_H

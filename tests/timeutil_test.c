@@ -9,29 +9,30 @@
 #include <string.h>
 #include "mathi/timeutil.h"
 
-void test_timeutil() {
+void test_timeutil()
+{
     printf("Starting time utility tests...\n\n");
 
     // Current timestamp
-    long ts1 = current_timestamp();
+    long ts1 = mathi_current_timestamp();
     printf("Timestamp 1: %ld\n", ts1);
 
     printf("Sleeping for 1 second...\n");
-    sleep_ms(1000);
+    mathi_sleep_ms(1000);
 
-    long ts2 = current_timestamp();
+    long ts2 = mathi_current_timestamp();
     printf("Timestamp 2: %ld\n", ts2);
     assert(ts2 - ts1 >= 1);
     printf("Timestamp difference verified: %ld seconds\n\n", ts2 - ts1);
 
     // Format time
     char buffer[32];
-    format_time(buffer, sizeof(buffer));
+    mathi_format_time(buffer, sizeof(buffer));
     printf("Formatted current time: %s\n", buffer);
     assert(strlen(buffer) > 0);
 
     // Elapsed seconds
-    int elapsed = elapsed_seconds(ts1, ts2);
+    int elapsed = mathi_elapsed_seconds(ts1, ts2);
     printf("Elapsed seconds between ts1 and ts2: %d\n", elapsed);
     assert(elapsed >= 1);
     printf("Elapsed time test passed!\n\n");
@@ -39,7 +40,8 @@ void test_timeutil() {
     printf("All timeutil tests passed!\n");
 }
 
-int main() {
+int main()
+{
     test_timeutil();
     return 0;
 }

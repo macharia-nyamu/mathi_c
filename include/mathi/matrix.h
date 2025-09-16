@@ -1,90 +1,61 @@
-/**
+/*
  * Mathi C Library - Matrix Utilities
+ * mathi_matrix.h
  * 
- * Provides basic matrix operations: addition, subtraction, multiplication, transpose,
- * determinant calculation, identity matrix creation, and scalar multiplication.
- * 
- * Status codes:
- * 0 - SUCCESS
- * 1 - INVALID_INPUT
- * 2 - MATRIX_ERROR
- * 3 - UNKNOWN_ERROR
- * 
- * @file matrix.h
- * @author Macharia Nyamū
- * @date 2025
- * @license MIT
- * 
- * Licensed under the MIT License. You may obtain a copy of the License at
- * https://opensource.org/licenses/MIT
+ * Copyright (c) 2025 Macharia Nyamū
+ * Licensed under the MIT License. See LICENSE file in the project root for details.
  */
 
 #ifndef MATHI_MATRIX_H
 #define MATHI_MATRIX_H
 
-/* ----- Matrix Operations ----- */
+/**
+ * @file mathi/matrix.h
+ * @brief Basic matrix operations: addition, subtraction, multiplication, transpose, determinant, identity, and scalar multiplication.
+ */
 
 /**
- * @brief Add two matrices.
- * @param a First matrix
- * @param b Second matrix
- * @param res Result matrix
+ * @brief Add two matrices a and b element-wise.
+ * @param a First input matrix
+ * @param b Second input matrix
+ * @param res Output matrix (result)
  * @param rows Number of rows
  * @param cols Number of columns
  */
-void matrix_add(int **a, int **b, int **res, int rows, int cols);
+void mathi_matrix_add(int **a, int **b, int **res, int rows, int cols);
 
 /**
- * @brief Subtract matrix b from matrix a.
- * @param a First matrix
- * @param b Second matrix
- * @param res Result matrix
- * @param rows Number of rows
- * @param cols Number of columns
+ * @brief Subtract matrix b from matrix a element-wise.
  */
-void matrix_sub(int **a, int **b, int **res, int rows, int cols);
+void mathi_matrix_sub(int **a, int **b, int **res, int rows, int cols);
 
 /**
- * @brief Multiply two square matrices of size n x n.
- * @param a First matrix
- * @param b Second matrix
- * @param res Result matrix
- * @param n Size of the square matrices
+ * @brief Multiply two square matrices a and b.
+ * @param n Dimension of the square matrices
  */
-void matrix_mul(int **a, int **b, int **res, int n);
+void mathi_matrix_mul(int **a, int **b, int **res, int n);
 
 /**
  * @brief Transpose a matrix.
- * @param a Input matrix
- * @param res Result matrix
- * @param rows Number of rows
- * @param cols Number of columns
  */
-void matrix_transpose(int **a, int **res, int rows, int cols);
+void mathi_matrix_transpose(int **a, int **res, int rows, int cols);
 
 /**
  * @brief Compute the determinant of a square matrix.
- * @param a Input matrix (n x n)
- * @param n Size of the square matrix
- * @return Determinant value
+ * @param a Input square matrix
+ * @param n Dimension of the matrix
+ * @return Determinant of the matrix
  */
-int matrix_determinant(int **a, int n);
+int mathi_matrix_determinant(int **a, int n);
 
 /**
  * @brief Create an identity matrix of size n x n.
- * @param res Result matrix
- * @param n Size of the matrix
  */
-void matrix_identity(int **res, int n);
+void mathi_matrix_identity(int **res, int n);
 
 /**
  * @brief Multiply a matrix by a scalar.
- * @param a Input matrix
- * @param scalar Scalar value
- * @param res Result matrix
- * @param rows Number of rows
- * @param cols Number of columns
  */
-void matrix_scalar_mul(int **a, int scalar, int **res, int rows, int cols);
+void mathi_matrix_scalar_mul(int **a, int scalar, int **res, int rows, int cols);
 
-#endif
+#endif // MATHI_MATRIX_H
