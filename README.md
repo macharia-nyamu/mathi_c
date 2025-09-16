@@ -508,18 +508,6 @@ int main() {
     return 0;
 }
 
-Contributing
-
-Contributions are welcome!
-
-    Fork the repository
-
-    Create a new branch
-
-    Make your changes and add tests
-
-    Submit a pull request
-
 License
 
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT) – see the LICENSE file for details.
