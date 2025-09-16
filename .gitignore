@@ -1,0 +1,17 @@
+# Build
+build/
+*.o
+*.out
+*.exe
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# Docs output
+docs/html/
+docs/latex/
+
+# OS files
+.DS_Store

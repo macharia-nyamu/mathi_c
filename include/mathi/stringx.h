@@ -114,4 +114,4 @@ char *string_trim(char *str);
  */
 char *string_replace(char *str, char old, char newc);
 
-#endif // MATHI_STRINGX_H
+#endif

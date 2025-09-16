@@ -33,7 +33,7 @@ double variance(int *arr, int n) {
     if(n <= 0) return 0;
     double m = mean(arr, n), sum = 0;
     for(int i = 0; i < n; i++) sum += (arr[i] - m) * (arr[i] - m);
-    return n > 1 ? sum / (n - 1) : 0;  // sample variance
+    return n > 1 ? sum / (n - 1) : 0
 }
 
 double stddev(int *arr, int n) {

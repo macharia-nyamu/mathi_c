@@ -61,4 +61,4 @@ int mode(int *arr, int n);
  */
 double percentile(int *arr, int n, double p);
 
-#endif /* MATHI_STATS_H */
+#endif

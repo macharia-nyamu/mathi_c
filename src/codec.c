@@ -8,7 +8,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* Base64 placeholders */
 int base64_encode(const unsigned char *data, size_t len, char **output) {
     if (!data || !output) return 2;
     *output = malloc(len * 2 + 1);

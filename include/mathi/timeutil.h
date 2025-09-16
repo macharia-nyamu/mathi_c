@@ -43,4 +43,4 @@ void sleep_ms(int ms);
  */
 int elapsed_seconds(long start, long end);
 
-#endif /* MATHI_TIMEUTIL_H */
+#endif

@@ -76,4 +76,4 @@ void mem_copy(void *dest, const void *src, size_t size);
  */
 void mem_swap(void *a, void *b, size_t size);
 
-#endif /* MATHI_UTIL_H */
+#endif

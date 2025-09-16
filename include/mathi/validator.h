@@ -77,4 +77,4 @@ int is_hex(const char *str);
  */
 int is_in_range(int value, int min, int max);
 
-#endif /* VALIDATOR_H */
+#endif

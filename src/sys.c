@@ -16,7 +16,7 @@
  */
 char* get_env(const char *name) {
     if(!name) return NULL;
-    return getenv(name);  // universally available in C
+    return getenv(name);
 }
 
 /**
@@ -26,11 +26,9 @@ int set_env(const char *name, const char *value, int overwrite) {
     if(!name || !value) return 0;
 
 #if defined(_WIN32) || defined(_WIN64)
-    // Windows: _putenv_s automatically overwrites
     if(!overwrite && getenv(name)) return 1; // do not overwrite existing
     return (_putenv_s(name, value) == 0) ? 1 : 0;
 #else
-    // POSIX: setenv
     return (setenv(name, value, overwrite ? 1 : 0) == 0) ? 1 : 0;
 #endif
 }

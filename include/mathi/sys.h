@@ -30,4 +30,4 @@ char* get_env(const char *name);
  */
 int set_env(const char *name, const char *value, int overwrite);
 
-#endif /* MATHI_SYS_H */
+#endif

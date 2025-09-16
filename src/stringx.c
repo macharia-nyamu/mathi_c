@@ -83,10 +83,8 @@ char *string_trim(char *str) {
     char *start = str;
     char *end;
 
-    // Trim leading spaces
     while(*start && isspace((unsigned char)*start)) start++;
 
-    // If the string is all spaces
     if(*start == 0) {
         str[0] = '\0';
         return str;
@@ -99,7 +97,6 @@ char *string_trim(char *str) {
     // Null-terminate
     *(end + 1) = '\0';
 
-    // Shift trimmed string to the original buffer start
     if(start != str) {
         memmove(str, start, strlen(start) + 1);
     }
