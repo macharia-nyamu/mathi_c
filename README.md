@@ -1,110 +1,182 @@
 # Mathi C Library
 
-Mathi C is a collection of C modules providing algorithms, data structures, file utilities, math utilities, string utilities, and time utilities.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/macharia-nyamu/mathi_c/build.yml)](https://github.com/macharia-nyamu/mathi_c/actions)
+
+Mathi C is a modular C library collection providing algorithms, data structures, file and string utilities, math operations, and time/date utilities — all ready to plug into your C projects.
+
+---
 
 ## Project Structure
 
-.
-├── build  
-├── docs  
-├── include  
-└── src  
-
-- `src/` – source code files  
-- `include/mathi/` – library headers  
-- `docs/` – additional documentation  
-- `build/` – compiled objects and binaries  
-
-## Features / Modules
-
-- **Algo** – algorithm implementations  
-- **Array** – array utilities  
-- **DS** – data structures  
-- **Filex** – file utilities  
-- **Mathx** – math utilities  
-- **Stringx** – string utilities  
-- **Timeutil** – time and date utilities  
-- **Util** – general utilities  
-
-## Installation / Build
-
-To build the library using the provided Makefile:
+Mathi C/
+├── build/ # compiled binaries and objects
+├── docs/ # additional documentation
+├── include/ # library headers
+│ └── mathi/
+└── src/ # source code files
 
 
-## Tests Commands
-gcc tests/algo_test.c src/algo.c -I./include -lm -o build/bin/algo_test
-./build/bin/algo_test
+---
 
-gcc tests/array_test.c src/array.c -I./include -lm -o build/bin/array_test
-./build/bin/array_test
+## Modules
 
-gcc tests/codec_test.c src/codec.c -I./include -lm -o build/bin/codec_test
-./build/bin/codec_test
+| Category          | Modules                       | Description                       |
+|------------------|-------------------------------|-----------------------------------|
+| Algorithms        | `Algo`, `Sort`, `Search`      | Sorting, searching, Fibonacci etc.|
+| Data Structures   | `DS`, `DSX`                   | Lists, stacks, queues, trees      |
+| Math Utilities    | `Mathx`, `Mathphy`, `Mathison`| Arithmetic, physics, advanced math|
+| File & I/O        | `Filex`, `Inputx`, `Logx`     | File handling, input, logging     |
+| String Utilities  | `Stringx`, `Codec`            | String operations, encoding/decoding|
+| Time & System     | `Timeutil`, `Sys`             | Date, time, system operations     |
+| General Utilities | `Util`, `Validator`           | Helpers, validators               |
 
-gcc tests/config_test.c src/config.c -I./include -lm -o build/bin/config_test
-./build/bin/config_test
+<!-- Space for future detailed descriptions of all functions -->
 
-gcc tests/conversion_test.c src/conversion.c -I./include -lm -o build/bin/conversion_test
-./build/bin/conversion_test
+---
 
-gcc tests/crypto_test.c src/crypto.c -I./include -lm -o build/bin/crypto_test
-./build/bin/crypto_test
+## Installation & Build
 
-gcc tests/ds_test.c src/ds.c -I./include -lm -o build/bin/ds_test
-./build/bin/ds_test
+Clone the repository:
 
-gcc tests/dsx_test.c src/dsx.c -I./include -lm -o build/bin/dsx_test
-./build/bin/dsx_test
+```bash
+git clone https://github.com/macharia-nyamu/mathi_c.git
+cd mathi_c
 
-gcc tests/filex_test.c src/filex.c -I./include -lm -o build/bin/filex_test
-./build/bin/filex_test
+Build the library:
 
-gcc tests/inputx_test.c src/inputx.c src/validator.c -I./include -lm -o build/bin/inputx_test
-./build/bin/inputx_test
+mkdir -p build/bin
+gcc src/*.c -I./include -lm -o build/bin/mathi_c
 
-gcc tests/logx_test.c src/logx.c -I./include -lm -o build/bin/logx_test
-./build/bin/logx_test
+Running All Tests
 
-gcc tests/mathison_test.c src/mathison.c -I./include -lm -o build/bin/mathison_test
-./build/bin/mathison_test
+# Algo
+gcc tests/algo_test.c src/algo.c -I./include -lm -o build/bin/algo_test && ./build/bin/algo_test
 
-gcc tests/mathphy_test.c src/mathphy.c -I./include -lm -o build/bin/mathphy_test
-./build/bin/mathphy_test
+# Array
+gcc tests/array_test.c src/array.c -I./include -lm -o build/bin/array_test && ./build/bin/array_test
 
-gcc tests/mathx_test.c src/mathx.c -I./include -lm -o build/bin/mathx_test
-./build/bin/mathx_test
+# Codec
+gcc tests/codec_test.c src/codec.c -I./include -lm -o build/bin/codec_test && ./build/bin/codec_test
 
-gcc tests/matrix_test.c src/matrix.c -I./include -lm -o build/bin/matrix_test
-./build/bin/matrix_test
+# Config
+gcc tests/config_test.c src/config.c -I./include -lm -o build/bin/config_test && ./build/bin/config_test
 
-gcc tests/networking_test.c src/networking.c -I./include -lm -o build/bin/networking_test
-./build/bin/networking_test
+# Conversion
+gcc tests/conversion_test.c src/conversion.c -I./include -lm -o build/bin/conversion_test && ./build/bin/conversion_test
 
-gcc tests/search_test.c src/search.c -I./include -lm -o build/bin/search_test
-./build/bin/search_test
+# Crypto
+gcc tests/crypto_test.c src/crypto.c -I./include -lm -o build/bin/crypto_test && ./build/bin/crypto_test
 
-gcc tests/sort_test.c src/sort.c -I./include -lm -o build/bin/sort_test
-./build/bin/sort_test
+# DS
+gcc tests/ds_test.c src/ds.c -I./include -lm -o build/bin/ds_test && ./build/bin/ds_test
 
-gcc tests/stats_test.c src/stats.c -I./include -lm -o build/bin/stats_test
-./build/bin/stats_test
+# DSX
+gcc tests/dsx_test.c src/dsx.c -I./include -lm -o build/bin/dsx_test && ./build/bin/dsx_test
 
-gcc tests/stringx_test.c src/stringx.c -I./include -lm -o build/bin/stringx_test
-./build/bin/stringx_test
+# Filex
+gcc tests/filex_test.c src/filex.c -I./include -lm -o build/bin/filex_test && ./build/bin/filex_test
 
-gcc tests/sys_test.c src/sys.c -I./include -lm -o build/bin/sys_test
-./build/bin/sys_test
+# Inputx
+gcc tests/inputx_test.c src/inputx.c src/validator.c -I./include -lm -o build/bin/inputx_test && ./build/bin/inputx_test
 
-gcc tests/timeutil_test.c src/timeutil.c -I./include -lm -o build/bin/timeutil_test
-./build/bin/timeutil_test
+# Logx
+gcc tests/logx_test.c src/logx.c -I./include -lm -o build/bin/logx_test && ./build/bin/logx_test
 
-gcc tests/util_test.c src/util.c -I./include -lm -o build/bin/util_test
-./build/bin/util_test
+# Mathison
+gcc tests/mathison_test.c src/mathison.c -I./include -lm -o build/bin/mathison_test && ./build/bin/mathison_test
 
-gcc tests/validator_test.c src/validator.c -I./include -lm -o build/bin/validator_test
-./build/bin/validator_test
+# Mathphy
+gcc tests/mathphy_test.c src/mathphy.c -I./include -lm -o build/bin/mathphy_test && ./build/bin/mathphy_test
 
+# Mathx
+gcc tests/mathx_test.c src/mathx.c -I./include -lm -o build/bin/mathx_test && ./build/bin/mathx_test
 
-## License
+# Matrix
+gcc tests/matrix_test.c src/matrix.c -I./include -lm -o build/bin/matrix_test && ./build/bin/matrix_test
 
-This project is licensed under the MIT License – see the [LICENSE](LICENSE) file for details.
+# Networking
+gcc tests/networking_test.c src/networking.c -I./include -lm -o build/bin/networking_test && ./build/bin/networking_test
+
+# Search
+gcc tests/search_test.c src/search.c -I./include -lm -o build/bin/search_test && ./build/bin/search_test
+
+# Sort
+gcc tests/sort_test.c src/sort.c -I./include -lm -o build/bin/sort_test && ./build/bin/sort_test
+
+# Stats
+gcc tests/stats_test.c src/stats.c -I./include -lm -o build/bin/stats_test && ./build/bin/stats_test
+
+# Stringx
+gcc tests/stringx_test.c src/stringx.c -I./include -lm -o build/bin/stringx_test && ./build/bin/stringx_test
+
+# Sys
+gcc tests/sys_test.c src/sys.c -I./include -lm -o build/bin/sys_test && ./build/bin/sys_test
+
+# Timeutil
+gcc tests/timeutil_test.c src/timeutil.c -I./include -lm -o build/bin/timeutil_test && ./build/bin/timeutil_test
+
+# Util
+gcc tests/util_test.c src/util.c -I./include -lm -o build/bin/util_test && ./build/bin/util_test
+
+# Validator
+gcc tests/validator_test.c src/validator.c -I./include -lm -o build/bin/validator_test && ./build/bin/validator_test
+
+Example Usage
+
+#include "mathi/algo.h"
+#include "mathi/array.h"
+#include "mathi/ds.h"
+#include "mathi/filex.h"
+#include "mathi/mathx.h"
+#include "mathi/stringx.h"
+#include "mathi/timeutil.h"
+#include "mathi/util.h"
+#include "mathi/validator.h"
+#include <stdio.h>
+
+int main() {
+    int arr[] = {3, 1, 4, 2};
+    bubble_sort(arr, 4);
+    printf("Bubble sorted array: ");
+    for(int i = 0; i < 4; i++) printf("%d ", arr[i]);
+    printf("\n");
+
+    char str[] = "Mathi";
+    string_reverse(str);
+    printf("Reversed string: %s\n", str);
+
+    if(is_int("123")) printf("123 is an int\n");
+    if(is_float("12.34")) printf("12.34 is a float\n");
+
+    printf("Factorial of 5 = %d\n", factorial_iterative(5));
+    printf("Sum of digits of 1234 = %d\n", sum_of_digits(1234));
+
+    stack_t s;
+    stack_init(&s);
+    stack_push(&s, 10);
+    stack_push(&s, 20);
+    printf("Stack top: %d\n", stack_top(&s));
+    stack_pop(&s);
+    printf("Stack top after pop: %d\n", stack_top(&s));
+
+    return 0;
+}
+
+Contributing
+
+Contributions are welcome!
+
+    Fork the repository
+
+    Create a new branch
+
+    Make your changes and add tests
+
+    Submit a pull request
+
+License
+
+This project is licensed under the MIT License – see the LICENSE
+
+file for details.
