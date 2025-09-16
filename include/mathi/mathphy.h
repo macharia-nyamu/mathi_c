@@ -1,112 +1,90 @@
-/**
- * Mathi C Library - Math/Physics Module
+/*
+ * Mathi C Library - Math & Physics Module
+ * mathphy.h
  * 
- * Advanced numerical routines: matrices, linear solvers, complex numbers
- * 
- * Status codes:
- * 0 - SUCCESS
- * 1 - MEMORY_ERROR
- * 2 - INVALID_INPUT
- * 3 - MATRIX_ERROR
- * 4 - UNKNOWN_ERROR
- * 
- * @file mathphy.h
- * @author Macharia Nyamū
- * @date 2025
- * @license MIT
- * 
- * Licensed under the MIT License. You may obtain a copy of the License at
- * https://opensource.org/licenses/MIT
+ * Copyright (c) 2025 Macharia Nyamū
+ * Licensed under the MIT License. See LICENSE file in the project root for details.
  */
 
 #ifndef MATHI_MATHPHY_H
 #define MATHI_MATHPHY_H
 
-/* ----- Matrix routines ----- */
+#include <stddef.h>
 
 /**
- * @brief Compute the determinant of a square matrix.
- * @param matrix Pointer to 2D array (n x n)
- * @param n Size of the square matrix
- * @return Determinant value
+ * @file mathi/mathphy.h
+ * @brief Math and physics utilities: matrices, linear algebra, and complex numbers.
  */
-double matrix_determinant(double **matrix, int n);
 
-/**
- * @brief Compute the inverse of a square matrix.
- * @param matrix Input matrix (n x n)
- * @param inverse Output matrix to store the inverse
- * @param n Size of the square matrix
- * @return Status code (0 = SUCCESS, 1 = MEMORY_ERROR, 2 = INVALID_INPUT, 3 = MATRIX_ERROR, 4 = UNKNOWN_ERROR)
- */
-int matrix_inverse(double **matrix, double **inverse, int n);
-
-/**
- * @brief Solve a linear system Ax = b.
- * @param A Coefficient matrix (n x n)
- * @param b Right-hand side vector
- * @param x Output solution vector
- * @param n Size of the system
- * @return Status code (0 = SUCCESS, 1 = MEMORY_ERROR, 2 = INVALID_INPUT, 3 = MATRIX_ERROR, 4 = UNKNOWN_ERROR)
- */
-int linear_solver(double **A, double *b, double *x, int n);
-
-/* ----- Complex numbers ----- */
 
 /**
  * @struct Complex
- * @brief Represents a complex number with real and imaginary parts.
+ * @brief Structure representing a complex number.
  */
-typedef struct Complex {
-    double real;
-    double imag;
+typedef struct {
+    double real; /**< Real part */
+    double imag; /**< Imaginary part */
 } Complex;
 
 /**
  * @brief Create a new complex number.
- * @param real Real component
- * @param imag Imaginary component
- * @return Complex number
+ * @param real Real part.
+ * @param imag Imaginary part.
+ * @return Complex number.
  */
-Complex complex_new(double real, double imag);
+Complex mathi_complex_new(double real, double imag);
 
 /**
  * @brief Add two complex numbers.
- * @param a First operand
- * @param b Second operand
- * @return Result of a + b
  */
-Complex complex_add(Complex a, Complex b);
+Complex mathi_complex_add(Complex a, Complex b);
 
 /**
  * @brief Subtract two complex numbers.
- * @param a First operand
- * @param b Second operand
- * @return Result of a - b
  */
-Complex complex_sub(Complex a, Complex b);
+Complex mathi_complex_sub(Complex a, Complex b);
 
 /**
  * @brief Multiply two complex numbers.
- * @param a First operand
- * @param b Second operand
- * @return Result of a * b
  */
-Complex complex_mul(Complex a, Complex b);
+Complex mathi_complex_mul(Complex a, Complex b);
 
 /**
  * @brief Divide two complex numbers.
- * @param a Numerator
- * @param b Denominator
- * @return Result of a / b
  */
-Complex complex_div(Complex a, Complex b);
+Complex mathi_complex_div(Complex a, Complex b);
 
 /**
- * @brief Compute absolute value (magnitude) of a complex number.
- * @param a Complex number
- * @return Magnitude |a|
+ * @brief Compute the absolute value (magnitude) of a complex number.
  */
-double complex_abs(Complex a);
+double mathi_complex_abs(Complex a);
 
-#endif
+
+/**
+ * @brief Compute the determinant of a square matrix.
+ * @param matrix Pointer to a 2D array of doubles.
+ * @param n Dimension of the square matrix.
+ * @return Determinant value (currently placeholder returns 0.0).
+ */
+double mathi_matrix_determinant(double **matrix, int n);
+
+/**
+ * @brief Compute the inverse of a square matrix.
+ * @param matrix Pointer to the original 2D array of doubles.
+ * @param inverse Pointer to the 2D array to store the inverse.
+ * @param n Dimension of the square matrix.
+ * @return 0 on success, non-zero on failure (currently placeholder).
+ */
+int mathi_matrix_inverse(double **matrix, double **inverse, int n);
+
+/**
+ * @brief Solve a linear system Ax = b.
+ * @param A Pointer to the matrix of coefficients.
+ * @param b Pointer to the right-hand side vector.
+ * @param x Pointer to the solution vector (output).
+ * @param n Dimension of the system.
+ * @return 0 on success, non-zero on failure (currently placeholder).
+ */
+int mathi_linear_solver(double **A, double *b, double *x, int n);
+
+#endif // MATHI_MATHPHY_H

@@ -1,107 +1,96 @@
+/*
+* Mathi C Library - Codec Test
+* Copyright (c) 2025 Macharia Nyamū
+* Licensed under the MIT License. See LICENSE file in the project root for details.
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
 #include "mathi/codec.h"
+#include "mathi/print.h"
 
-void print_bytes(const unsigned char *data, size_t len, const char *name) {
-    printf("%s = [", name);
-    for(size_t i = 0; i < len; i++) {
-        printf("%d", data[i]);
-        if(i < len-1) printf(", ");
-    }
-    printf("]\n");
-}
+void test_base64_encode_decode(const char *text) 
+{
+    printf("\nTesting Base64 encode/decode \n");
 
-void test_base64_encode() {
-    printf("Testing base64_encode...\n");
-    const unsigned char data[] = "Hello";
-    print_bytes(data, 5, "data");
     char *encoded = NULL;
-    int res = base64_encode(data, 5, &encoded);
-    printf("base64_encode result = %d\n", res);
-    printf("encoded = %s\n", encoded);
-    assert(res == 0);
+    unsigned char *decoded = NULL;
+    size_t decoded_len = 0;
+    int status;
+
+    printf("Original text: \"%s\"\n", text);
+
+    // Encode
+    status = mathi_enc_base64((const unsigned char*)text, strlen(text), &encoded);
+    printf("Encoded string: \"%s\" (status = %d)\n", encoded, status);
+    assert(status == 0);
     assert(encoded != NULL);
-    assert(strcmp(encoded, "BASE64_ENCODE_PLACEHOLDER") == 0);
+
+    // Decode
+    status = mathi_dec_base64(encoded, &decoded, &decoded_len);
+    printf("Decoded length = %zu (status = %d)\n", decoded_len, status);
+    mathi_prnt_bytes(decoded, decoded_len, "Decoded bytes");
+
+    // Print decoded text as string
+    char *decoded_str = malloc(decoded_len + 1);
+    memcpy(decoded_str, decoded, decoded_len);
+    decoded_str[decoded_len] = '\0';
+    printf("Decoded text: \"%s\"\n", decoded_str);
+
+    // Check if decoded text equals original
+    assert(status == 0);
+    assert(decoded_len == strlen(text));
+    assert(strcmp(decoded_str, text) == 0);
+
     free(encoded);
+    free(decoded);
+    free(decoded_str);
 
-    res = base64_encode(NULL, 0, &encoded);
-    printf("base64_encode(NULL) result = %d\n", res);
-    assert(res == 2); // null input check
+    printf("\n");
 }
 
-void test_base64_decode() {
-    printf("Testing base64_decode...\n");
-    const char *input = "SGVsbG8=";
-    printf("input = %s\n", input);
-    unsigned char *output = NULL;
+void test_rle_compress_decompress() 
+{
+    printf("\nTesting RLE compress/decompress \n");
+
+    unsigned char data[] = {1, 1, 2, 2, 2, 3, 3, 3, 3, 4};
+    unsigned char *compressed = NULL;
+    unsigned char *decompressed = NULL;
     size_t out_len = 0;
+    int status;
 
-    int res = base64_decode(input, &output, &out_len);
-    printf("base64_decode result = %d\n", res);
-    printf("output length = %zu\n", out_len);
-    print_bytes(output, out_len, "output");
-    assert(res == 0);
-    assert(output != NULL);
-    assert(out_len == strlen(input));
-    free(output);
+    printf("Original data: ");
+    mathi_prnt_bytes(data, sizeof(data), "Data");
 
-    res = base64_decode(NULL, &output, &out_len);
-    printf("base64_decode(NULL) result = %d\n", res);
-    assert(res == 2); // null input check
+    // Compress
+    status = mathi_rle_compress(data, sizeof(data), &compressed, &out_len);
+    printf("Compressed length = %zu (status = %d)\n", out_len, status);
+    mathi_prnt_bytes(compressed, out_len, "Compressed");
+    assert(status == 0);
+
+    // Decompress
+    status = mathi_rle_decompress(compressed, out_len, &decompressed, &out_len);
+    printf("Decompressed length = %zu (status = %d)\n", out_len, status);
+    mathi_prnt_bytes(decompressed, out_len, "Decompressed");
+    assert(status == 0);
+    assert(memcmp(decompressed, data, sizeof(data)) == 0);
+
+    free(compressed);
+    free(decompressed);
+
+    printf("\n");
 }
 
-void test_rle_compress() {
-    printf("Testing rle_compress...\n");
-    unsigned char data[] = {1, 1, 2, 2, 2, 3};
-    print_bytes(data, 6, "data");
-    unsigned char *out = NULL;
-    size_t out_len = 0;
+int main() 
+{
+    const char *text = "Mathi C by Macharia Nyamū";
 
-    int res = rle_compress(data, 6, &out, &out_len);
-    printf("rle_compress result = %d\n", res);
-    printf("compressed length = %zu\n", out_len);
-    print_bytes(out, out_len, "compressed output");
-    assert(res == 0);
-    assert(out != NULL);
-    assert(out_len == 6); // placeholder returns same length
-    for (int i = 0; i < 6; i++) assert(out[i] == data[i]);
-    free(out);
-
-    res = rle_compress(NULL, 0, &out, &out_len);
-    printf("rle_compress(NULL) result = %d\n", res);
-    assert(res == 2); // null input
-}
-
-void test_rle_decompress() {
-    printf("Testing rle_decompress...\n");
-    unsigned char data[] = {1, 2, 3, 4};
-    print_bytes(data, 4, "data");
-    unsigned char *out = NULL;
-    size_t out_len = 0;
-
-    int res = rle_decompress(data, 4, &out, &out_len);
-    printf("rle_decompress result = %d\n", res);
-    printf("decompressed length = %zu\n", out_len);
-    print_bytes(out, out_len, "decompressed output");
-    assert(res == 0);
-    assert(out != NULL);
-    assert(out_len == 4);
-    for (int i = 0; i < 4; i++) assert(out[i] == data[i]);
-    free(out);
-
-    res = rle_decompress(NULL, 0, &out, &out_len);
-    printf("rle_decompress(NULL) result = %d\n", res);
-    assert(res == 2); // null input
-}
-
-int main() {
-    test_base64_encode();
-    test_base64_decode();
-    test_rle_compress();
-    test_rle_decompress();
+    test_base64_encode_decode(text);
+    test_rle_compress_decompress();
 
     printf("All codec tests passed successfully!\n");
+
     return 0;
 }

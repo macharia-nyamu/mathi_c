@@ -1,5 +1,7 @@
 /*
- * Mathi C Library
+ * Mathi C Library - Statistics Utilities
+ * stats.h
+ *
  * Copyright (c) 2025 Macharia Nyamū
  * Licensed under the MIT License. See LICENSE file in the project root for details.
  */
@@ -8,57 +10,57 @@
 #define MATHI_STATS_H
 
 /**
- * @file stats.h
- * @brief Statistical functions for integer arrays.
+ * @file mathi/stats.h
+ * @brief Basic statistical functions for integer arrays.
  */
 
 /**
- * @brief Compute the mean (average) of an integer array.
- * @param arr Pointer to the integer array.
- * @param n Number of elements in the array.
- * @return The mean value as a double. Returns 0 if n <= 0.
+ * @brief Compute the mean (average) of an array
+ * @param arr Pointer to the integer array
+ * @param n Number of elements in the array
+ * @return Mean value as double
  */
-double mean(int *arr, int n);
+double mathi_mean(int *arr, int n);
 
 /**
- * @brief Compute the median of an integer array.
- * @param arr Pointer to the integer array.
- * @param n Number of elements in the array.
- * @return The median value as a double. Returns 0 if n <= 0.
+ * @brief Compute the median of an array
+ * @param arr Pointer to the integer array
+ * @param n Number of elements in the array
+ * @return Median value as double
  */
-double median(int *arr, int n);
+double mathi_median(int *arr, int n);
 
 /**
- * @brief Compute the variance of an integer array.
- * @param arr Pointer to the integer array.
- * @param n Number of elements in the array.
- * @return The variance as a double. Returns 0 if n <= 0.
+ * @brief Compute the variance of an array
+ * @param arr Pointer to the integer array
+ * @param n Number of elements in the array
+ * @return Variance as double
  */
-double variance(int *arr, int n);
+double mathi_variance(int *arr, int n);
 
 /**
- * @brief Compute the standard deviation of an integer array.
- * @param arr Pointer to the integer array.
- * @param n Number of elements in the array.
- * @return The standard deviation as a double. Returns 0 if n <= 0.
+ * @brief Compute the standard deviation of an array
+ * @param arr Pointer to the integer array
+ * @param n Number of elements in the array
+ * @return Standard deviation as double
  */
-double stddev(int *arr, int n);
+double mathi_stddev(int *arr, int n);
 
 /**
- * @brief Compute the mode (most frequent value) of an integer array.
- * @param arr Pointer to the integer array.
- * @param n Number of elements in the array.
- * @return The mode as an integer. Returns 0 if n <= 0.
+ * @brief Compute the mode (most frequent value) of an array
+ * @param arr Pointer to the integer array
+ * @param n Number of elements in the array
+ * @return Mode as integer
  */
-int mode(int *arr, int n);
+int mathi_mode(int *arr, int n);
 
 /**
- * @brief Compute the percentile value of an integer array.
- * @param arr Pointer to the integer array.
- * @param n Number of elements in the array.
- * @param p The desired percentile (0-100).
- * @return The percentile value as a double. Returns 0 if n <= 0.
+ * @brief Compute a percentile value of an array
+ * @param arr Pointer to the integer array
+ * @param n Number of elements in the array
+ * @param p Percentile (0-100)
+ * @return Percentile value as double
  */
-double percentile(int *arr, int n, double p);
+double mathi_percentile(int *arr, int n, double p);
 
-#endif
+#endif // MATHI_STATS_H

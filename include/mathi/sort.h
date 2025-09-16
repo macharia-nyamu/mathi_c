@@ -1,69 +1,67 @@
-/**
+/*
  * Mathi C Library - Sorting Algorithms
- * 
- * Provides common sorting routines for integer arrays: bubble, selection, insertion,
- * merge, quick, heap, and counting sort.
- * 
- * @file sort.h
- * @author Macharia Nyamū
- * @date 2025
- * @license MIT
- * 
- * Licensed under the MIT License. You may obtain a copy of the License at
- * https://opensource.org/licenses/MIT
+ * sort.h
+ *
+ * Copyright (c) 2025 Macharia Nyamū
+ * Licensed under the MIT License. See LICENSE file in the project root for details.
  */
 
 #ifndef MATHI_SORT_H
 #define MATHI_SORT_H
 
 /**
- * @brief Sort an array using bubble sort.
- * @param arr Array of integers
- * @param n Number of elements
+ * @file mathi/sort.h
+ * @brief Standard sorting algorithms for integer arrays.
  */
-void bubble_sort(int *arr, int n);
 
 /**
- * @brief Sort an array using selection sort.
- * @param arr Array of integers
- * @param n Number of elements
+ * @brief Bubble Sort
+ * @param arr Pointer to the array
+ * @param n Number of elements in the array
  */
-void selection_sort(int *arr, int n);
+void mathi_bubble_sort(int *arr, int n);
 
 /**
- * @brief Sort an array using insertion sort.
- * @param arr Array of integers
- * @param n Number of elements
+ * @brief Selection Sort
+ * @param arr Pointer to the array
+ * @param n Number of elements in the array
  */
-void insertion_sort(int *arr, int n);
+void mathi_selection_sort(int *arr, int n);
 
 /**
- * @brief Sort an array using merge sort.
- * @param arr Array of integers
- * @param n Number of elements
+ * @brief Insertion Sort
+ * @param arr Pointer to the array
+ * @param n Number of elements in the array
  */
-void merge_sort(int *arr, int n);
+void mathi_insertion_sort(int *arr, int n);
 
 /**
- * @brief Sort an array using quick sort.
- * @param arr Array of integers
- * @param n Number of elements
+ * @brief Merge Sort
+ * @param arr Pointer to the array
+ * @param n Number of elements in the array
  */
-void quick_sort(int *arr, int n);
+void mathi_merge_sort(int *arr, int n);
 
 /**
- * @brief Sort an array using heap sort.
- * @param arr Array of integers
- * @param n Number of elements
+ * @brief Quick Sort
+ * @param arr Pointer to the array
+ * @param n Number of elements in the array
  */
-void heap_sort(int *arr, int n);
+void mathi_quick_sort(int *arr, int n);
 
 /**
- * @brief Sort an array using counting sort.
- * @param arr Array of integers
- * @param n Number of elements
+ * @brief Heap Sort
+ * @param arr Pointer to the array
+ * @param n Number of elements in the array
+ */
+void mathi_heap_sort(int *arr, int n);
+
+/**
+ * @brief Counting Sort (requires maximum element)
+ * @param arr Pointer to the array
+ * @param n Number of elements in the array
  * @param max Maximum value in the array
  */
-void counting_sort(int *arr, int n, int max);
+void mathi_counting_sort(int *arr, int n, int max);
 
-#endif
+#endif // MATHI_SORT_H

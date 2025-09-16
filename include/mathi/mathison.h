@@ -1,137 +1,233 @@
 /*
  * Mathi C Library - JSON Module
- * Mathison.h
+ * mathison.h
  * 
  * Copyright (c) 2025 Macharia Nyamū
  * Licensed under the MIT License. See LICENSE file in the project root for details.
- *
- * @file mathison.h
- * @brief Provides functions for creating, manipulating, validating, and serializing JSON objects.
  */
 
-#ifndef MATHISON_H
-#define MATHISON_H
+#ifndef MATHI_MATHISON_H
+#define MATHI_MATHISON_H
 
 #include <stddef.h>
 #include <stdbool.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+/**
+ * @file mathi/mathison.h
+ * @brief JSON manipulation utilities (creation, parsing, arrays, objects) for Mathi C Library.
+ */
 
-/* --- JSON Types --- */
+
+/**
+ * @enum MathiJSONType
+ * @brief Enumeration of possible JSON types.
+ */
 typedef enum {
-    JSON_NULL,
-    JSON_BOOL,
-    JSON_NUMBER,
-    JSON_STRING,
-    JSON_ARRAY,
-    JSON_OBJECT
-} JSONType;
+    JSON_NULL,    /**< Null type */
+    JSON_BOOL,    /**< Boolean type */
+    JSON_NUMBER,  /**< Numeric type */
+    JSON_STRING,  /**< String type */
+    JSON_ARRAY,   /**< Array type */
+    JSON_OBJECT   /**< Object type */
+} MathiJSONType;
 
 /**
  * @struct MathiJSON
- * @brief Represents a JSON value (object, array, string, number, boolean, or null)
+ * @brief Representation of a JSON value.
  */
-typedef struct MathiJSON {
-    JSONType type;
+typedef struct MathiJSON MathiJSON;
+
+struct MathiJSON {
+    MathiJSONType type; /**< Type of JSON value */
     union {
-        double num;                  /**< number value */
-        bool boolean;                /**< boolean value */
-        char *str;                   /**< string value */
-        struct {                      /**< array value */
-            struct MathiJSON **items;
-            size_t count;
-        } array;
-        struct {                      /**< object value */
-            char **keys;
-            struct MathiJSON **values;
-            size_t count;
+        struct {           /**< JSON object */
+            char **keys;        /**< Array of keys */
+            MathiJSON **values; /**< Array of corresponding values */
+            size_t count;       /**< Number of key-value pairs */
         } object;
+        struct {           /**< JSON array */
+            MathiJSON **items; /**< Array of items */
+            size_t count;      /**< Number of items */
+        } array;
+        char *str;         /**< JSON string value */
+        double num;        /**< JSON numeric value */
+        bool boolean;      /**< JSON boolean value */
     } data;
-} MathiJSON;
+};
 
-/* --- Creation / Initialization --- */
-MathiJSON* json_new_object();
-MathiJSON* json_new_array();
-MathiJSON* json_new_string(const char *value);
-MathiJSON* json_new_number(double value);
-MathiJSON* json_new_bool(bool value);
-MathiJSON* json_new_null();
-int json_copy(MathiJSON *source, MathiJSON **dest);
-int json_deep_copy(MathiJSON *source, MathiJSON **dest);
 
-/* --- Memory Management / Cleanup --- */
-int json_free(MathiJSON *json);
-int json_clear(MathiJSON *json_obj);
+/**
+ * @brief Create a new JSON object.
+ * @return Pointer to a new MathiJSON object of type JSON_OBJECT.
+ */
+MathiJSON* mathison_new_object(void);
 
-/* --- Parsing / Serialization --- */
-int json_parse(const char *str, MathiJSON **json_obj);
-int json_serialize(MathiJSON *json_obj, char **output);
+/**
+ * @brief Create a new JSON array.
+ * @return Pointer to a new MathiJSON object of type JSON_ARRAY.
+ */
+MathiJSON* mathison_new_array(void);
 
-/* --- Type Checks --- */
-int json_validate_type(MathiJSON *json_obj, int expected_type);
-bool json_is_object(MathiJSON *json_obj);
-bool json_is_array(MathiJSON *json_obj);
-bool json_is_string(MathiJSON *json_obj);
-bool json_is_number(MathiJSON *json_obj);
-bool json_is_bool(MathiJSON *json_obj);
-bool json_is_null(MathiJSON *json_obj);
+/**
+ * @brief Create a new JSON string.
+ * @param value String value to store.
+ * @return Pointer to a new MathiJSON object of type JSON_STRING.
+ */
+MathiJSON* mathison_new_string(const char *value);
 
-/* --- Object Manipulation --- */
-int json_set_value(MathiJSON *json_obj, const char *key, MathiJSON *value);
-int json_get_value(MathiJSON *json_obj, const char *key, MathiJSON **value);
-int json_remove_key(MathiJSON *json_obj, const char *key);
-bool json_has_key(MathiJSON *json_obj, const char *key);
-int json_object_count(MathiJSON *json_obj);
-int json_merge(MathiJSON *target, MathiJSON *source);
-int json_deep_merge(MathiJSON *target, MathiJSON *source);
+/**
+ * @brief Create a new JSON number.
+ * @param value Numeric value to store.
+ * @return Pointer to a new MathiJSON object of type JSON_NUMBER.
+ */
+MathiJSON* mathison_new_number(double value);
 
-/* --- Array Manipulation --- */
-int json_append_array(MathiJSON *json_array, MathiJSON *value);
-int json_prepend_array(MathiJSON *json_array, MathiJSON *value);
-int json_insert_array(MathiJSON *json_array, size_t index, MathiJSON *value);
-int json_remove_array_index(MathiJSON *json_array, size_t index);
-MathiJSON* json_array_get(MathiJSON *json_array, size_t index);
-size_t json_array_count(MathiJSON *json_array);
-int json_swap_array_items(MathiJSON *json_array, size_t i, size_t j);
-int json_array_concat(MathiJSON *target_array, MathiJSON *source_array);
+/**
+ * @brief Create a new JSON boolean.
+ * @param value Boolean value to store.
+ * @return Pointer to a new MathiJSON object of type JSON_BOOL.
+ */
+MathiJSON* mathison_new_bool(bool value);
 
-/* --- Validation / Schema --- */
-int json_array_all_type(MathiJSON *json_array, int expected_type);
-int json_array_min_length(MathiJSON *json_array, size_t min_len);
-int json_array_max_length(MathiJSON *json_array, size_t max_len);
-int json_array_index_valid(MathiJSON *json_array, size_t index);
-int json_array_values_unique(MathiJSON *json_array);
-int json_array_sorted(MathiJSON *json_array, bool ascending);
-int json_array_nested_validate(MathiJSON *json_array, size_t index, int expected_type);
-int json_object_has_key(MathiJSON *json_obj, const char *key);
-int json_object_all_values_type(MathiJSON *json_obj, int expected_type);
-int json_object_key_count(MathiJSON *json_obj, size_t expected_count);
-int json_object_values_consistent(MathiJSON *json_obj, int expected_type);
-int json_has_required_keys(MathiJSON *json_obj, const char **keys, size_t n_keys);
-int json_number_in_range(MathiJSON *json_num, double min, double max);
-int json_string_length(MathiJSON *json_str, size_t min_len, size_t max_len);
-int json_string_matches(MathiJSON *json_str, const char *pattern);
-int json_nested_validate(MathiJSON *json_obj, const char *key, int expected_type);
-int json_validate_schema(MathiJSON *json_obj, MathiJSON *schema);
-int json_validate_array_schema(MathiJSON *json_array, MathiJSON *schema);
-int json_is_empty(MathiJSON *json_obj);
+/**
+ * @brief Create a new JSON null value.
+ * @return Pointer to a new MathiJSON object of type JSON_NULL.
+ */
+MathiJSON* mathison_new_null(void);
 
-/* --- Path / Advanced Access --- */
-int json_get_path(MathiJSON *json_obj, const char *path, MathiJSON **value);
-int json_set_path(MathiJSON *json_obj, const char *path, MathiJSON *value);
-MathiJSON* json_find_key(MathiJSON *json_obj, const char *key);
-int json_filter_array(MathiJSON *json_array, bool (*predicate)(MathiJSON*));
-int json_map_array(MathiJSON *json_array, MathiJSON* (*func)(MathiJSON*));
 
-/* --- Conversions / Extractors --- */
-int json_to_string(MathiJSON *json_obj, char **output);
-int json_to_number(MathiJSON *json_obj, double *output);
-int json_to_bool(MathiJSON *json_obj, bool *output);
+/**
+ * @brief Copy a JSON object.
+ * @param source Source JSON object.
+ * @param dest Pointer to destination JSON pointer.
+ * @return 0 on success, -1 on failure.
+ */
+int mathison_copy(MathiJSON *source, MathiJSON **dest);
 
-#ifdef __cplusplus
-}
-#endif
+/**
+ * @brief Free a JSON object and all its children.
+ * @param json_obj JSON object to free.
+ * @return 0 on success, -1 on failure.
+ */
+int mathison_free(MathiJSON *json_obj);
 
-#endif // MATHISON_H
+/**
+ * @brief Clear contents of a JSON object/array without freeing the main structure.
+ * @param json_obj JSON object or array to clear.
+ * @return 0 on success, -1 on failure.
+ */
+int mathison_clear(MathiJSON *json_obj);
+
+
+/**
+ * @brief Check if a JSON object is of type JSON_OBJECT.
+ */
+bool mathison_is_object(MathiJSON *json_obj);
+
+/**
+ * @brief Check if a JSON object is of type JSON_ARRAY.
+ */
+bool mathison_is_array(MathiJSON *json_obj);
+
+/**
+ * @brief Check if a JSON object is of type JSON_STRING.
+ */
+bool mathison_is_string(MathiJSON *json_obj);
+
+/**
+ * @brief Check if a JSON object is of type JSON_NUMBER.
+ */
+bool mathison_is_number(MathiJSON *json_obj);
+
+/**
+ * @brief Check if a JSON object is of type JSON_BOOL.
+ */
+bool mathison_is_bool(MathiJSON *json_obj);
+
+/**
+ * @brief Check if a JSON object is of type JSON_NULL.
+ */
+bool mathison_is_null(MathiJSON *json_obj);
+
+/**
+ * @brief Validate JSON type against expected type.
+ * @param json_obj JSON object to check.
+ * @param expected_type Expected MathiJSONType.
+ * @return Non-zero if matches, zero otherwise.
+ */
+int mathison_validate_type(MathiJSON *json_obj, int expected_type);
+
+
+/**
+ * @brief Append an item to a JSON array.
+ */
+int mathison_append_array(MathiJSON *json_array, MathiJSON *value);
+
+/**
+ * @brief Prepend an item to a JSON array.
+ */
+int mathison_prepend_array(MathiJSON *json_array, MathiJSON *value);
+
+/**
+ * @brief Insert an item at a specific index in a JSON array.
+ */
+int mathison_insert_array(MathiJSON *json_array, size_t index, MathiJSON *value);
+
+/**
+ * @brief Remove an item at a specific index from a JSON array.
+ */
+int mathison_remove_array_index(MathiJSON *json_array, size_t index);
+
+/**
+ * @brief Swap two items in a JSON array.
+ */
+int mathison_swap_array_items(MathiJSON *json_array, size_t i, size_t j);
+
+/**
+ * @brief Get an item from a JSON array by index.
+ */
+MathiJSON* mathison_array_get(MathiJSON *json_array, size_t index);
+
+/**
+ * @brief Get number of items in a JSON array.
+ */
+size_t mathison_array_count(MathiJSON *json_array);
+
+/**
+ * @brief Concatenate two JSON arrays.
+ */
+int mathison_array_concat(MathiJSON *target_array, MathiJSON *source_array);
+
+
+/**
+ * @brief Set a key-value pair in a JSON object.
+ */
+int mathison_set_value(MathiJSON *json_obj, const char *key, MathiJSON *value);
+
+/**
+ * @brief Get a value by key from a JSON object.
+ */
+int mathison_get_value(MathiJSON *json_obj, const char *key, MathiJSON **value);
+
+/**
+ * @brief Remove a key-value pair from a JSON object.
+ */
+int mathison_remove_key(MathiJSON *json_obj, const char *key);
+
+/**
+ * @brief Check if a key exists in a JSON object.
+ */
+bool mathison_has_key(MathiJSON *json_obj, const char *key);
+
+
+/**
+ * @brief Parse a string into a JSON object.
+ */
+int mathison_parse(const char *str, MathiJSON **json_obj);
+
+/**
+ * @brief Serialize a JSON object (currently supports strings only).
+ */
+int mathison_serialize(MathiJSON *json_obj, char **output);
+
+#endif // MATHI_MATHISON_H

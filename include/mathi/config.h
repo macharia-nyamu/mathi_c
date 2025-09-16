@@ -1,65 +1,54 @@
-/**
- * Mathi C Library - Configuration Utilities
- * 
- * This header provides functions for loading, reading, modifying, and saving
- * configuration files (INI-style or similar). It allows retrieval of strings
- * and integers, as well as updating and saving configurations.
- * 
- * Status codes:
- * 0 - SUCCESS
- * 1 - FILE_ERROR
- * 2 - MEMORY_ERROR
- * 3 - KEY_NOT_FOUND
- * 4 - INVALID_INPUT
- * 5 - UNKNOWN_ERROR
- * 
- * @file config.h
- * @author Macharia Nyamū
- * @date 2025
- * @license MIT
- * 
- * Licensed under the MIT License. You may obtain a copy of the License at
- * https://opensource.org/licenses/MIT
- */
+/*
+* Mathi C Library - Config Utilities
+* Copyright (c) 2025 Macharia Nyamū
+* Licensed under the MIT License. See LICENSE file in the project root for details.
+*/
 
 #ifndef MATHI_CONFIG_H
 #define MATHI_CONFIG_H
 
+#include <stddef.h>  // for size_t
+
+/**
+ * @file mathi/config.h
+ * @brief Configuration file utilities.
+ */
+
 /**
  * @brief Load a configuration file.
- * @param file_path Path to the configuration file.
- * @return Status code (0 = SUCCESS, 1 = FILE_ERROR, 2 = MEMORY_ERROR, 5 = UNKNOWN_ERROR).
+ * @param file_path Path to the config file.
+ * @return 0 on success, non-zero on error.
  */
-int config_load(const char *file_path);
+int mathi_conf_load(const char *file_path);
 
 /**
  * @brief Get a string value from the configuration.
- * @param key The configuration key.
- * @return Pointer to the string value, or NULL if not found.
+ * @param key Key to look up.
+ * @return String value, or empty string if not found.
  */
-const char* config_get_string(const char *key);
+const char* mathi_conf_get_string(const char *key);
 
 /**
  * @brief Get an integer value from the configuration.
- * @param key The configuration key.
- * @param value Pointer to store the retrieved integer.
- * @return Status code (0 = SUCCESS, 3 = KEY_NOT_FOUND, 4 = INVALID_INPUT, 5 = UNKNOWN_ERROR).
+ * @param key Key to look up.
+ * @param value Pointer to store the integer result.
+ * @return 0 on success, non-zero on error.
  */
-int config_get_int(const char *key, int *value);
+int mathi_conf_get_int(const char *key, int *value);
 
 /**
  * @brief Set a string value in the configuration.
- * @param key The configuration key.
- * @param value The string value to set.
- * @return Status code (0 = SUCCESS, 2 = MEMORY_ERROR, 4 = INVALID_INPUT, 5 = UNKNOWN_ERROR).
+ * @param key Key to set.
+ * @param value Value to assign.
+ * @return 0 on success, non-zero on error.
  */
-int config_set_string(const char *key, const char *value);
+int mathi_conf_set_string(const char *key, const char *value);
 
 /**
- * @brief Save the configuration to a file.
- * @param file_path Path to the output configuration file.
- * @return Status code (0 = SUCCESS, 1 = FILE_ERROR, 2 = MEMORY_ERROR, 5 = UNKNOWN_ERROR).
+ * @brief Save the current configuration to file.
+ * @param file_path Path to save the config file.
+ * @return 0 on success, non-zero on error.
  */
-int config_save(const char *file_path);
+int mathi_conf_save(const char *file_path);
 
-#endif
+#endif // MATHI_CONFIG_H

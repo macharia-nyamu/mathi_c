@@ -5,19 +5,23 @@
 #include "mathi/inputx.h"
 #include "mathi/validator.h"
 
-void test_get_int_static() {
-    printf("Testing get_int with static value...\n");
+void test_get_int_static() 
+{
+    printf("Testing mathi_get_int with static value...\n");
 
     char buf[] = "123";
     InputResult res;
     int val;
 
-    if(is_int(buf)) {
+    if(mathi_is_int(buf)) 
+    {
         val = atoi(buf);
         res.code = 0;
         res.value = &val;
-    } else {
-        res.code = 2;
+    } 
+    else 
+    {
+        res.code = 2;  // INPUT_INVALID_INT
         res.value = NULL;
     }
 
@@ -26,19 +30,23 @@ void test_get_int_static() {
     assert(*(int*)res.value == 123);
 }
 
-void test_get_double_static() {
-    printf("Testing get_double with static value...\n");
+void test_get_double_static() 
+{
+    printf("Testing mathi_get_double with static value...\n");
 
     char buf[] = "3.1415";
     InputResult res;
     double val;
 
-    if(is_number(buf)) {
+    if(mathi_is_number(buf)) 
+    {
         val = atof(buf);
         res.code = 0;
         res.value = &val;
-    } else {
-        res.code = 3;
+    } 
+    else 
+    {
+        res.code = 3;  // INPUT_INVALID_DOUBLE
         res.value = NULL;
     }
 
@@ -47,17 +55,21 @@ void test_get_double_static() {
     assert(*(double*)res.value == 3.1415);
 }
 
-void test_get_binary_static() {
-    printf("Testing get_binary with static value...\n");
+void test_get_binary_static() 
+{
+    printf("Testing mathi_get_binary with static value...\n");
 
     char buf[] = "10101";
     InputResult res;
 
-    if(is_binary(buf)) {
+    if(mathi_is_binary(buf)) 
+    {
         res.code = 0;
         res.value = buf;
-    } else {
-        res.code = 4;
+    } 
+    else 
+    {
+        res.code = 4;  // INPUT_INVALID_BINARY
         res.value = NULL;
     }
 
@@ -66,17 +78,21 @@ void test_get_binary_static() {
     assert(strcmp((char*)res.value, "10101") == 0);
 }
 
-void test_get_hex_static() {
-    printf("Testing get_hex with static value...\n");
+void test_get_hex_static() 
+{
+    printf("Testing mathi_get_hex with static value...\n");
 
     char buf[] = "1aF";
     InputResult res;
 
-    if(is_hex(buf)) {
+    if(mathi_is_hex(buf)) 
+    {
         res.code = 0;
         res.value = buf;
-    } else {
-        res.code = 5;
+    } 
+    else 
+    {
+        res.code = 5;  // INPUT_INVALID_HEX
         res.value = NULL;
     }
 
@@ -85,17 +101,21 @@ void test_get_hex_static() {
     assert(strcmp((char*)res.value, "1aF") == 0);
 }
 
-void test_get_string_static() {
-    printf("Testing get_string with static value...\n");
+void test_get_string_static() 
+{
+    printf("Testing mathi_get_string with static value...\n");
 
     char buf[] = "Hello Mathi";
     InputResult res;
 
-    if(strlen(buf) > 0) {
+    if(strlen(buf) > 0) 
+    {
         res.code = 0;
         res.value = buf;
-    } else {
-        res.code = 1;
+    } 
+    else 
+    {
+        res.code = 1;  // INPUT_EMPTY
         res.value = NULL;
     }
 
@@ -104,13 +124,14 @@ void test_get_string_static() {
     assert(strcmp((char*)res.value, "Hello Mathi") == 0);
 }
 
-int main() {
+int main() 
+{
     test_get_int_static();
     test_get_double_static();
     test_get_binary_static();
     test_get_hex_static();
     test_get_string_static();
 
-    printf("All inputx static tests passed successfully!\n");
+    printf("All mathi_inputx static tests passed successfully!\n");
     return 0;
 }

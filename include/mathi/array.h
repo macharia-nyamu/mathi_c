@@ -1,116 +1,130 @@
-/**
- * Mathi C Library - Array Utilities
- * 
- * This header provides common array operations such as searching, reversing,
- * copying, filling, summing, finding min/max, averaging, equality checks,
- * shuffling, and deduplication.
- * 
- * @file array.h
- * @author Macharia Nyamū
- * @date 2025
- * @license MIT
- * 
- * Licensed under the MIT License. You may obtain a copy of the License at
- * https://opensource.org/licenses/MIT
- */
+/*
+* Mathi C Library - Array Utilities
+* Copyright (c) 2025 Macharia Nyamū
+* Licensed under the MIT License. See LICENSE file in the project root for details.
+*/
 
 #ifndef MATHI_ARRAY_H
 #define MATHI_ARRAY_H
 
+#include <stddef.h>  // for size_t
+#include <stdlib.h>  // for malloc/free
+
+/**
+ * @file mathi/array.h
+ * @brief Array manipulation functions: search, copy, reverse, shuffle, etc.
+ */
+
 /**
  * @brief Find the index of a value in an array.
- * @param arr The array to search.
- * @param n The size of the array.
- * @param value The value to find.
- * @return The index of the value or -1 if not found.
+ * @param arr Array to search.
+ * @param n Size of the array.
+ * @param value Value to find.
+ * @return Index of value if found, -1 otherwise.
  */
-int array_index_of(int *arr, int n, int value);
+int mathi_arr_index(const int *restrict arr, size_t n, int value);
 
 /**
  * @brief Check if an array contains a value.
- * @param arr The array to search.
- * @param n The size of the array.
- * @param value The value to check for.
- * @return 1 if found, 0 otherwise.
+ * @param arr Array to search.
+ * @param n Size of the array.
+ * @param value Value to check.
+ * @return 1 if value exists, 0 otherwise.
  */
-int array_contains(int *arr, int n, int value);
+int mathi_arr_contains(const int *restrict arr, size_t n, int value);
 
 /**
- * @brief Reverse an array in-place.
- * @param arr The array to reverse.
- * @param n The size of the array.
+ * @brief Reverse an array in place.
+ * @param arr Array to reverse.
+ * @param n Size of the array.
  */
-void array_reverse(int *arr, int n);
+void mathi_arr_reverse(int *arr, size_t n);
 
 /**
- * @brief Copy contents of one array to another.
+ * @brief Copy contents from one array to another.
  * @param src Source array.
  * @param dest Destination array.
  * @param n Number of elements to copy.
  */
-void array_copy(int *src, int *dest, int n);
+void mathi_arr_copy(const int *restrict src, int *restrict dest, size_t n);
 
 /**
- * @brief Fill an array with a given value.
- * @param arr The array to fill.
- * @param n The size of the array.
- * @param value The value to fill.
+ * @brief Fill an array with a specific value.
+ * @param arr Array to fill.
+ * @param n Size of the array.
+ * @param value Value to fill.
  */
-void array_fill(int *arr, int n, int value);
+void mathi_arr_fill(int *arr, size_t n, int value);
 
 /**
- * @brief Compute the sum of all elements in an array.
- * @param arr The array to sum.
- * @param n The size of the array.
+ * @brief Compute the sum of elements in an array.
+ * @param arr Array to sum.
+ * @param n Size of the array.
  * @return Sum of elements.
  */
-int array_sum(int *arr, int n);
+int mathi_arr_sum(const int *restrict arr, size_t n);
 
 /**
- * @brief Find the maximum element in an array.
- * @param arr The array to search.
- * @param n The size of the array.
- * @return Maximum value.
+ * @brief Find the maximum value in an array.
+ * @param arr Array to search.
+ * @param n Size of the array.
+ * @return Maximum value, or 0 if n <= 0.
  */
-int array_max(int *arr, int n);
+int mathi_arr_max(const int *restrict arr, size_t n);
 
 /**
- * @brief Find the minimum element in an array.
- * @param arr The array to search.
- * @param n The size of the array.
- * @return Minimum value.
+ * @brief Find the minimum value in an array.
+ * @param arr Array to search.
+ * @param n Size of the array.
+ * @return Minimum value, or 0 if n <= 0.
  */
-int array_min(int *arr, int n);
+int mathi_arr_min(const int *restrict arr, size_t n);
 
 /**
- * @brief Compute the average of an array.
- * @param arr The array to average.
- * @param n The size of the array.
- * @return Average value as a double.
+ * @brief Compute the average of array elements.
+ * @param arr Array to process.
+ * @param n Size of the array.
+ * @return Average as double, or 0 if n <= 0.
  */
-double array_average(int *arr, int n);
+double mathi_arr_average(const int *restrict arr, size_t n);
 
 /**
  * @brief Check if two arrays are equal.
  * @param a First array.
  * @param b Second array.
- * @param n Number of elements to compare.
- * @return 1 if arrays are equal, 0 otherwise.
+ * @param n Size of arrays.
+ * @return 1 if equal, 0 otherwise.
  */
-int array_equals(int *a, int *b, int n);
+int mathi_arr_equal(const int *restrict a, const int *restrict b, size_t n);
 
 /**
  * @brief Shuffle an array randomly.
- * @param arr The array to shuffle.
- * @param n The size of the array.
+ * @param arr Array to shuffle.
+ * @param n Size of the array.
  */
-void array_shuffle(int *arr, int n);
+void mathi_arr_shuffle(int *arr, size_t n);
 
 /**
  * @brief Remove duplicate elements from an array.
- * @param arr The array to deduplicate.
- * @param n Pointer to the size of the array; will be updated with the new size
+ * @param arr Array to deduplicate.
+ * @param n Pointer to size of array; updated with new size.
  */
-void array_unique(int *arr, int *n);
+void mathi_arr_distinct(int *arr, size_t *n);
+
+/**
+ * @brief Rotate array elements k times to the right.
+ * @param arr Array to rotate.
+ * @param n Size of the array.
+ * @param k Number of rotations.
+ */
+void mathi_arr_rotate(int *arr, size_t n, size_t k);
+
+/**
+ * @brief Check if an array is sorted in ascending order.
+ * @param arr Array to check.
+ * @param n Size of the array.
+ * @return 1 if sorted, 0 otherwise.
+ */
+int mathi_arr_sorted(const int *restrict arr, size_t n);
 
 #endif // MATHI_ARRAY_H
