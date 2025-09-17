@@ -372,6 +372,12 @@ Mathi C is a modular C library collection providing algorithms, data structures,
 
 ---
 
+### 📫 Contact
+- **Email:** macharianyamu.info@gmail.com  
+- **WhatsApp / SMS / Call:** +254798622497  
+
+---
+
 ## Installation & Build
 
 Clone the repository:
@@ -470,9 +476,3 @@ Contributions are welcome!
 License
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT) – see the LICENSE file for details.
 
-
-### 📫 Contact
-- **Email:** macharianyamu.info@gmail.com  
-- **WhatsApp / SMS / Call:** +254798622497  
-
----
