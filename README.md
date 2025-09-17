@@ -469,3 +469,10 @@ Contributions are welcome!
 
 License
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT) – see the LICENSE file for details.
+
+
+### 📫 Contact
+- **Email:** macharianyamu.info@gmail.com  
+- **WhatsApp / SMS / Call:** +254798622497  
+
+---
