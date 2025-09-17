@@ -460,14 +460,7 @@ gcc tests/util_test.c src/util.c src/print.c -I./include -lm -o build/bin/util_t
 gcc tests/validator_test.c src/validator.c -I./include -lm -o build/bin/validator_test && ./build/bin/validator_test
 
 
-
-<<<<<<< HEAD
-License
-
-This project is licensed under the [MIT License](https://opensource.org/licenses/MIT) – see the LICENSE file for details.
-=======
 Contributing
-
 Contributions are welcome!
     Fork the repository
     Create a new branch
@@ -476,4 +469,3 @@ Contributions are welcome!
 
 License
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT) – see the LICENSE file for details.
->>>>>>> 2a374da (Update to Mathi C v1.1: added new functions and docs)
