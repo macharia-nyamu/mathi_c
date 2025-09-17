@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/macharia-nyamu/mathi_c/build.yml)](https://github.com/macharia-nyamu/mathi_c/actions)
 
-Mathi C is a modular C library collection providing algorithms, data structures, file and string utilities, math operations, and time/date utilities — all ready to plug into your C projects.
+Mathi C is a modular C library collection providing algorithms, data structures, file and string utilities, math operations, and time/date utilities; all ready to plug into your C projects.
 
 ---
 
@@ -372,12 +372,6 @@ Mathi C is a modular C library collection providing algorithms, data structures,
 
 ---
 
-### 📫 Contact
-- **Email:** macharianyamu.info@gmail.com  
-- **WhatsApp / SMS / Call:** +254798622497  
-
----
-
 ## Installation & Build
 
 Clone the repository:
@@ -390,89 +384,78 @@ Build the library:
 
 mkdir -p build/bin
 gcc src/*.c -I./include -lm -o build/bin/mathi_c
+```
 
 Running All Tests
 
+```bash
 # Algo
 gcc tests/algo_test.c src/algo.c src/print.c -I./include -lm -o build/bin/algo_test && ./build/bin/algo_test
-
 # Array
 gcc tests/array_test.c src/array.c src/print.c -I./include -lm -o build/bin/array_test && ./build/bin/array_test
-
 # Codec
 gcc tests/codec_test.c src/codec.c src/stringx.c src/print.c -I./include -lm -o build/bin/codec_test && ./build/bin/codec_test
-
 # Config
 gcc tests/config_test.c src/config.c -I./include -lm -o build/bin/config_test && ./build/bin/config_test
-
 # Conversion
 gcc tests/conversion_test.c src/conversion.c -I./include -lm -o build/bin/conversion_test && ./build/bin/conversion_test
-
 # Crypto
 gcc tests/crypto_test.c src/crypto.c -I./include -lm -o build/bin/crypto_test && ./build/bin/crypto_test
-
 # DS
 gcc tests/ds_test.c src/ds.c src/print.c -I./include -lm -o build/bin/ds_test && ./build/bin/ds_test
-
 # DS ADVANCED
 gcc tests/ds_advanced_test.c src/ds.c src/ds_advanced.c -I./include -lm -o build/bin/ds_advanced_test && ./build/bin/ds_advanced_test
-
 # Filex
 gcc tests/filex_test.c src/filex.c -I./include -lm -o build/bin/filex_test && ./build/bin/filex_test
-
 # Inputx
 gcc tests/inputx_test.c src/inputx.c src/validator.c -I./include -lm -o build/bin/inputx_test && ./build/bin/inputx_test
-
 # Logx
 gcc tests/logx_test.c src/logx.c -I./include -lm -o build/bin/logx_test && ./build/bin/logx_test
-
 # Mathison
 gcc tests/mathison_test.c src/mathison.c -I./include -lm -o build/bin/mathison_test && ./build/bin/mathison_test
-
 # Mathphy
 gcc tests/mathphy_test.c src/mathphy.c -I./include -lm -o build/bin/mathphy_test && ./build/bin/mathphy_test
-
 # Mathx
 gcc tests/mathx_test.c src/mathx.c -I./include -lm -o build/bin/mathx_test && ./build/bin/mathx_test
-
 # Matrix
 gcc tests/matrix_test.c src/matrix.c src/print.c -I./include -lm -o build/bin/matrix_test && ./build/bin/matrix_test
-
 # Networking
 gcc tests/networking_test.c src/networking.c -I./include -lm -o build/bin/networking_test && ./build/bin/networking_test
-
 # Search
 gcc tests/search_test.c src/search.c -I./include -lm -o build/bin/search_test && ./build/bin/search_test
-
 # Sort
 gcc tests/sort_test.c src/sort.c src/print.c src/array.c -I./include -lm -o build/bin/sort_test && ./build/bin/sort_test
-
 # Stats
 gcc tests/stats_test.c src/stats.c src/print.c -I./include -lm -o build/bin/stats_test && ./build/bin/stats_test
-
 # Stringx
 gcc tests/stringx_test.c src/stringx.c src/print.c -I./include -lm -o build/bin/stringx_test && ./build/bin/stringx_test
-
 # Sys
 gcc tests/sys_test.c src/sys.c -I./include -lm -o build/bin/sys_test && ./build/bin/sys_test
-
 # Timeutil
 gcc tests/timeutil_test.c src/timeutil.c -I./include -lm -o build/bin/timeutil_test && ./build/bin/timeutil_test
-
 # Util
 gcc tests/util_test.c src/util.c src/print.c -I./include -lm -o build/bin/util_test && ./build/bin/util_test
-
 # Validator
 gcc tests/validator_test.c src/validator.c -I./include -lm -o build/bin/validator_test && ./build/bin/validator_test
+```
 
+### Contributing
 
-Contributing
 Contributions are welcome!
     Fork the repository
     Create a new branch
     Make your changes and add tests
     Submit a pull request
 
-License
+---
+
+### License
+
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT) – see the LICENSE file for details.
+
+---
+
+### Contact
+- **Email:** macharianyamu.info@gmail.com  
+- **WhatsApp / SMS / Call:** +254798622497  
 
