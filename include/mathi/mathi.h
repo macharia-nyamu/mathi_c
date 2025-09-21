@@ -5,7 +5,8 @@
 #include <stdlib.h>  // for abs()
 #include <stdio.h>
 #include <stdbool.h>
-
+ 
+ 
 // --- algo.h ---
 /**
  * @brief Compute the n-th Fibonacci number.
@@ -50,6 +51,20 @@ int mathi_dgts_sum(int n);
  * @return Root digital of n.
  */
 int mathi_rt_digital(int n);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // --- array.h ---
 /**
@@ -164,6 +179,20 @@ void mathi_arr_rotate(int *arr, size_t n, size_t k);
  */
 int mathi_arr_sorted(const int *restrict arr, size_t n);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // --- stringx.h ---
 /**
  * @brief Reverse a string in place
@@ -273,6 +302,20 @@ char *mathi_string_trim(char *str);
  */
 char *mathi_string_replace(char *str, char old, char newc);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // --- codec.h ---
 /**
  * @brief Encode data to Base64.
@@ -311,6 +354,20 @@ int mathi_rle_compress(const unsigned char *restrict in, size_t len, unsigned ch
  * @return 0 on success, 1 on memory error, 2 on invalid input.
  */
 int mathi_rle_decompress(const unsigned char *restrict in, size_t len, unsigned char **out, size_t *out_len);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // --- conversion.h ---
 /**
@@ -369,6 +426,20 @@ int mathi_str_to_int(const char *str, int *result);
  */
 int mathi_str_to_dbl(const char *str, double *result);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // --- crypto.h ---
 /**
  * @brief Compute SHA-256 hash (placeholder implementation).
@@ -401,6 +472,20 @@ int mathi_xor_cipher(char *data, char key);
  * @return Checksum (0–255), or 2 if input is NULL.
  */
 int mathi_checksum(const unsigned char *data, size_t len);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // --- ds.h ---
 /**
@@ -458,6 +543,7 @@ void mathi_linked_list_print(Node *head);
 #define mathi_list_length mathi_linked_list_length
 #define mathi_list_find   mathi_linked_list_find
 
+
 /**
  * @struct Stack
  * @brief Simple dynamic integer stack.
@@ -508,6 +594,7 @@ int mathi_stack_is_empty(Stack *s);
  * @param s Stack pointer
  */
 void mathi_stack_free(Stack *s);
+
 
 /**
  * @struct Queue
@@ -562,6 +649,7 @@ int mathi_queue_is_empty(Queue *q);
  */
 void mathi_queue_free(Queue *q);
 
+
 /**
  * @struct Pair
  * @brief Key-value pair stored in a hash table.
@@ -609,6 +697,20 @@ int  mathi_hash_get(Hash *h, const char *k);
  */
 void mathi_hash_free(Hash *h);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // --- ds_advanced.h ---
 
 /**
@@ -653,6 +755,8 @@ int   mathi_heap_is_empty(Heap *h);
  */
 void  mathi_heap_free(Heap *h);
 
+
+
 /**
  * @struct Graph
  * @brief Opaque structure for adjacency-list graph.
@@ -689,7 +793,7 @@ int* mathi_graph_neighbors(Graph *g, int vertex, int *num_neighbors);
  * @brief Free all memory associated with the graph.
  * @param g Pointer to Graph
  */
-void mathi_graph_free(Graph *g);
+void   mathi_graph_free(Graph *g);
 
 /**
  * @struct Trie
@@ -702,7 +806,7 @@ typedef struct Trie Trie;
  * @brief Create a new empty Trie.
  * @return Pointer to Trie, or NULL on failure
  */
-Trie* mathi_trie_new(void);
+Trie*  mathi_trie_new(void);
 
 /**
  * @brief Insert a key-value pair into the Trie.
@@ -711,7 +815,7 @@ Trie* mathi_trie_new(void);
  * @param value Pointer to value
  * @return 0 on success, 1 on failure
  */
-int mathi_trie_insert(Trie *t, const char *key, void *value);
+int    mathi_trie_insert(Trie *t, const char *key, void *value);
 
 /**
  * @brief Search for a key in the Trie.
@@ -719,13 +823,27 @@ int mathi_trie_insert(Trie *t, const char *key, void *value);
  * @param key Null-terminated string key
  * @return Pointer to stored value, or NULL if not found
  */
-void* mathi_trie_search(Trie *t, const char *key);
+void*  mathi_trie_search(Trie *t, const char *key);
 
 /**
  * @brief Free all memory associated with the Trie.
  * @param t Pointer to Trie
  */
-void mathi_trie_free(Trie *t);
+void   mathi_trie_free(Trie *t);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // --- filex.h ---
 /**
@@ -743,6 +861,7 @@ FILE* mathi_filex_open(const char *path, const char *mode);
 void mathi_filex_close(FILE *f);
 
 /* --- File existence / size --- */
+
 /**
  * @brief Check if a file exists.
  * @param path File path
@@ -756,6 +875,7 @@ int mathi_file_exists(const char *path);
  * @return File size in bytes, or -1 if file cannot be opened
  */
 long mathi_file_size(const char *path);
+
 
 /**
  * @brief Read the contents of a file into a buffer.
@@ -809,6 +929,20 @@ int mathi_file_copy(const char *src, const char *dest);
  */
 int mathi_file_delete(const char *path);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // --- inputx.h ---
 #define INPUT_OK              0
 #define INPUT_EMPTY           1
@@ -856,18 +990,28 @@ InputResult mathi_get_hex(const char *prompt);
  * @param prompt Message to display
  * @return InputResult containing status and pointer to string
  */
-InputResult get_string(const char *prompt);
+InputResult mathi_get_string(const char *prompt);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // --- logx.h ---
-/**
- * @file mathi/logx.h
- * @brief Logging functions (info, warn, error) with optional file output.
- */
-
 /* Status codes */
 #define LOG_SUCCESS   0
 #define LOG_FILE_ERROR 1
 #define LOG_INVALID_PATH 2
+
 
 /**
  * @brief Set the file to which logs should be written.
@@ -897,18 +1041,32 @@ int mathi_log_warn(const char *fmt, ...);
  */
 int mathi_log_error(const char *fmt, ...);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // --- mathison.h ---
 /**
  * @enum MathiJSONType
  * @brief Enumeration of possible JSON types.
  */
 typedef enum {
-    JSON_NULL,    /**< Null type */
-    JSON_BOOL,    /**< Boolean type */
-    JSON_NUMBER,  /**< Numeric type */
-    JSON_STRING,  /**< String type */
-    JSON_ARRAY,   /**< Array type */
-    JSON_OBJECT   /**< Object type */
+    JSON_NULL,    /**< Null value */
+    JSON_BOOL,    /**< Boolean value */
+    JSON_NUMBER,  /**< Numeric value */
+    JSON_STRING,  /**< String value */
+    JSON_ARRAY,   /**< Array of JSON values */
+    JSON_OBJECT   /**< Object with key-value pairs */
 } MathiJSONType;
 
 /**
@@ -918,7 +1076,7 @@ typedef enum {
 typedef struct MathiJSON MathiJSON;
 
 struct MathiJSON {
-    MathiJSONType type; /**< Type of JSON value */
+    MathiJSONType type; /**< Type of the JSON value */
     union {
         struct {           /**< JSON object */
             char **keys;        /**< Array of keys */
@@ -935,293 +1093,289 @@ struct MathiJSON {
     } data;
 };
 
+/* ----------------------------------------
+   Creation functions
+---------------------------------------- */
 
 /**
- * @brief Create a new JSON object.
- * @return Pointer to a new MathiJSON object of type JSON_OBJECT.
+ * @brief Create a new empty JSON object.
  */
 MathiJSON* mathison_new_object(void);
 
 /**
- * @brief Create a new JSON array.
- * @return Pointer to a new MathiJSON object of type JSON_ARRAY.
+ * @brief Create a new empty JSON array.
  */
 MathiJSON* mathison_new_array(void);
 
 /**
  * @brief Create a new JSON string.
- * @param value String value to store.
- * @return Pointer to a new MathiJSON object of type JSON_STRING.
+ * @param value Null-terminated string to store.
  */
 MathiJSON* mathison_new_string(const char *value);
 
 /**
  * @brief Create a new JSON number.
- * @param value Numeric value to store.
- * @return Pointer to a new MathiJSON object of type JSON_NUMBER.
  */
 MathiJSON* mathison_new_number(double value);
 
 /**
  * @brief Create a new JSON boolean.
- * @param value Boolean value to store.
- * @return Pointer to a new MathiJSON object of type JSON_BOOL.
  */
 MathiJSON* mathison_new_bool(bool value);
 
 /**
- * @brief Create a new JSON null value.
- * @return Pointer to a new MathiJSON object of type JSON_NULL.
+ * @brief Create a new JSON null.
  */
 MathiJSON* mathison_new_null(void);
 
+/* ----------------------------------------
+   Memory management
+---------------------------------------- */
 
 /**
- * @brief Copy a JSON object.
- * @param source Source JSON object.
- * @param dest Pointer to destination JSON pointer.
- * @return 0 on success, -1 on failure.
+ * @brief Deep copy a JSON object.
  */
 int mathison_copy(MathiJSON *source, MathiJSON **dest);
 
 /**
- * @brief Free a JSON object and all its children.
- * @param json_obj JSON object to free.
- * @return 0 on success, -1 on failure.
+ * @brief Free a JSON object and all its children recursively.
  */
 int mathison_free(MathiJSON *json_obj);
 
 /**
- * @brief Clear contents of a JSON object/array without freeing the main structure.
- * @param json_obj JSON object or array to clear.
- * @return 0 on success, -1 on failure.
+ * @brief Clear contents of a JSON array or object without freeing the container.
  */
 int mathison_clear(MathiJSON *json_obj);
 
+/* ----------------------------------------
+   Type checking
+---------------------------------------- */
 
-/**
- * @brief Check if a JSON object is of type JSON_OBJECT.
- */
 bool mathison_is_object(MathiJSON *json_obj);
-
-/**
- * @brief Check if a JSON object is of type JSON_ARRAY.
- */
 bool mathison_is_array(MathiJSON *json_obj);
-
-/**
- * @brief Check if a JSON object is of type JSON_STRING.
- */
 bool mathison_is_string(MathiJSON *json_obj);
-
-/**
- * @brief Check if a JSON object is of type JSON_NUMBER.
- */
 bool mathison_is_number(MathiJSON *json_obj);
-
-/**
- * @brief Check if a JSON object is of type JSON_BOOL.
- */
 bool mathison_is_bool(MathiJSON *json_obj);
-
-/**
- * @brief Check if a JSON object is of type JSON_NULL.
- */
 bool mathison_is_null(MathiJSON *json_obj);
 
 /**
  * @brief Validate JSON type against expected type.
- * @param json_obj JSON object to check.
- * @param expected_type Expected MathiJSONType.
- * @return Non-zero if matches, zero otherwise.
  */
 int mathison_validate_type(MathiJSON *json_obj, int expected_type);
 
-/**
- * @brief Append an item to a JSON array.
- */
+/* ----------------------------------------
+   Array utilities
+---------------------------------------- */
+
 int mathison_append_array(MathiJSON *json_array, MathiJSON *value);
-
-/**
- * @brief Prepend an item to a JSON array.
- */
 int mathison_prepend_array(MathiJSON *json_array, MathiJSON *value);
-
-/**
- * @brief Insert an item at a specific index in a JSON array.
- */
 int mathison_insert_array(MathiJSON *json_array, size_t index, MathiJSON *value);
-
-/**
- * @brief Remove an item at a specific index from a JSON array.
- */
 int mathison_remove_array_index(MathiJSON *json_array, size_t index);
-
-/**
- * @brief Swap two items in a JSON array.
- */
 int mathison_swap_array_items(MathiJSON *json_array, size_t i, size_t j);
-
-/**
- * @brief Get an item from a JSON array by index.
- */
 MathiJSON* mathison_array_get(MathiJSON *json_array, size_t index);
-
-/**
- * @brief Get number of items in a JSON array.
- */
 size_t mathison_array_count(MathiJSON *json_array);
-
-/**
- * @brief Concatenate two JSON arrays.
- */
 int mathison_array_concat(MathiJSON *target_array, MathiJSON *source_array);
 
-/**
- * @brief Set a key-value pair in a JSON object.
- */
+/* ----------------------------------------
+   Object utilities
+---------------------------------------- */
+
 int mathison_set_value(MathiJSON *json_obj, const char *key, MathiJSON *value);
-
-/**
- * @brief Get a value by key from a JSON object.
- */
 int mathison_get_value(MathiJSON *json_obj, const char *key, MathiJSON **value);
-
-/**
- * @brief Remove a key-value pair from a JSON object.
- */
 int mathison_remove_key(MathiJSON *json_obj, const char *key);
-
-/**
- * @brief Check if a key exists in a JSON object.
- */
 bool mathison_has_key(MathiJSON *json_obj, const char *key);
 
-/**
- * @brief Parse a string into a JSON object.
- */
-int mathison_parse(const char *str, MathiJSON **json_obj);
+/* ----------------------------------------
+   Parsing and serialization
+---------------------------------------- */
 
 /**
- * @brief Serialize a JSON object (currently supports strings only).
+ * @brief Parse a JSON string into a MathiJSON object.
+ * @param str Input JSON string.
+ * @param json_obj Output JSON object pointer.
+ * @param endptr Optional pointer to character after parsed value.
+ * Supports nested arrays and objects.
+ */
+int mathison_parse(const char *str, MathiJSON **json_obj, const char **endptr);
+
+/**
+ * @brief Serialize a JSON object into a string.
+ * Allocates memory for the output string; user must free it.
  */
 int mathison_serialize(MathiJSON *json_obj, char **output);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 // --- config.h ---
 /**
- * @brief Load a configuration file.
- * @param file_path Path to the config file.
- * @return 0 on success, non-zero on error.
+ * @brief Load a configuration file into memory.
+ * @param file_path Path to the JSON config file.
+ * @return 0 on success, non-zero on failure.
+ *
+ * Loads the entire file into a single MathiJSON root object.
  */
 int mathi_conf_load(const char *file_path);
 
 /**
- * @brief Save the current configuration to file.
- * @param file_path Path to save the config file.
- * @return 0 on success, non-zero on error.
+ * @brief Save the current configuration to a file.
+ * @param file_path Path to write the JSON config file.
+ * @return 0 on success, non-zero on failure.
+ *
+ * Serializes the MathiJSON root object into a JSON string and writes to file.
  */
 int mathi_conf_save(const char *file_path);
 
+/* --- String operations --- */
+
 /**
- * @brief Get a string value from the configuration.
- * @param key Key to look up.
- * @return String value, or empty string if not found.
+ * @brief Get a string value by key.
+ * @param key The key to retrieve.
+ * @return Pointer to string value, or empty string if key does not exist or type mismatch.
  */
 const char* mathi_conf_get_string(const char *key);
 
 /**
- * @brief Set a string value in the configuration.
- * @param key Key to set.
- * @param value Value to assign.
- * @return 0 on success, non-zero on error.
+ * @brief Set a string value by key.
+ * @param key The key to set.
+ * @param value The string value to assign.
+ * @return 0 on success, non-zero on failure.
  */
 int mathi_conf_set_string(const char *key, const char *value);
 
+/* --- Integer operations --- */
+
 /**
- * @brief Get an integer value from the configuration.
- * @param key Key to look up.
+ * @brief Get an integer value by key.
+ * @param key The key to retrieve.
  * @param value Pointer to store the integer result.
- * @return 0 on success, non-zero on error.
+ * @return 0 on success, non-zero on failure.
  */
 int mathi_conf_get_int(const char *key, int *value);
 
 /**
- * @brief Get a boolean value from the configuration.
- * @param key Key to look up.
+ * @brief Set an integer value by key.
+ * @param key The key to set.
+ * @param value Integer value to assign.
+ * @return 0 on success, non-zero on failure.
+ */
+int mathi_conf_set_int(const char *key, int value);
+
+/* --- Boolean operations --- */
+
+/**
+ * @brief Get a boolean value by key.
+ * @param key The key to retrieve.
  * @param value Pointer to store the boolean result.
- * @return 0 on success, non-zero on error.
+ * @return 0 on success, non-zero on failure.
  */
 int mathi_conf_get_bool(const char *key, bool *value);
 
 /**
- * @brief Set a boolean value in the configuration.
- * @param key Key to set.
+ * @brief Set a boolean value by key.
+ * @param key The key to set.
  * @param value Boolean value to assign.
- * @return 0 on success, non-zero on error.
+ * @return 0 on success, non-zero on failure.
  */
 int mathi_conf_set_bool(const char *key, bool value);
 
+/* --- Double (floating-point) operations --- */
+
 /**
- * @brief Get a floating-point (double) value from the configuration.
- * @param key Key to look up.
+ * @brief Get a double value by key.
+ * @param key The key to retrieve.
  * @param value Pointer to store the double result.
- * @return 0 on success, non-zero on error.
+ * @return 0 on success, non-zero on failure.
  */
 int mathi_conf_get_double(const char *key, double *value);
 
 /**
- * @brief Set a floating-point (double) value in the configuration.
- * @param key Key to set.
+ * @brief Set a double value by key.
+ * @param key The key to set.
  * @param value Double value to assign.
- * @return 0 on success, non-zero on error.
+ * @return 0 on success, non-zero on failure.
  */
 int mathi_conf_set_double(const char *key, double value);
 
+/* --- Array operations --- */
+
 /**
- * @brief Get an array from the configuration.
- * @param key Key to look up.
+ * @brief Get an array by key.
+ * @param key The key to retrieve.
  * @param array Pointer to store the MathiJSON array.
- * @return 0 on success, non-zero on error.
+ * @return 0 on success, non-zero on failure.
+ *
+ * Returns a pointer to the existing MathiJSON array stored in the root object.
  */
 int mathi_conf_get_array(const char *key, MathiJSON **array);
 
 /**
- * @brief Set an array in the configuration.
- * @param key Key to set.
+ * @brief Set an array by key.
+ * @param key The key to set.
  * @param array MathiJSON array to assign.
- * @return 0 on success, non-zero on error.
+ * @return 0 on success, non-zero on failure.
  */
 int mathi_conf_set_array(const char *key, MathiJSON *array);
 
+/* --- Object operations --- */
+
 /**
- * @brief Get a nested object from the configuration.
- * @param key Key to look up.
+ * @brief Get a nested object by key.
+ * @param key The key to retrieve.
  * @param object Pointer to store the MathiJSON object.
- * @return 0 on success, non-zero on error.
+ * @return 0 on success, non-zero on failure.
+ *
+ * Returns a pointer to the existing MathiJSON object stored in the root object.
  */
 int mathi_conf_get_object(const char *key, MathiJSON **object);
 
 /**
- * @brief Set a nested object in the configuration.
- * @param key Key to set.
+ * @brief Set a nested object by key.
+ * @param key The key to set.
  * @param object MathiJSON object to assign.
- * @return 0 on success, non-zero on error.
+ * @return 0 on success, non-zero on failure.
  */
 int mathi_conf_set_object(const char *key, MathiJSON *object);
 
+/* --- Key removal and existence --- */
+
 /**
  * @brief Remove a key/value pair from the configuration.
- * @param key Key to remove.
- * @return 0 on success, non-zero on error.
+ * @param key The key to remove.
+ * @return 0 on success, non-zero if key does not exist.
  */
 int mathi_conf_remove_key(const char *key);
 
 /**
  * @brief Check if a key exists in the configuration.
- * @param key Key to check.
+ * @param key The key to check.
  * @return true if the key exists, false otherwise.
  */
 bool mathi_conf_has_key(const char *key);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // --- mathphy.h ---
 /**
@@ -1283,6 +1437,20 @@ int mathi_matrix_inverse(double **matrix, double **inverse, int n);
  * @param n Dimension of the system.
  */
 int mathi_linear_solver(double **A, double *b, double *x, int n);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // --- mathx.h ---
 /**
@@ -1355,6 +1523,20 @@ double mathi_max_double(double a, double b);
  */
 double mathi_min_double(double a, double b);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // --- matrix.h ---
 /**
  * @brief Add two matrices a and b element-wise.
@@ -1399,6 +1581,20 @@ void mathi_matrix_identity(int **res, int n);
  * @brief Multiply a matrix by a scalar.
  */
 void mathi_matrix_scalar_mul(int **a, int scalar, int **res, int rows, int cols);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // --- networking.h ---
 /**
@@ -1456,6 +1652,20 @@ int mathi_send_udp(int sock, const char *data, size_t size, const char *host, in
  */
 int mathi_recv_udp(int sock, char *buffer, size_t size);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // --- print.h ---
 /**
  * @brief Print a linked list of integers.
@@ -1508,6 +1718,20 @@ void mathi_prnt_char_pair(const char *label, char c1, char c2);
 
 void mathi_prnt_mem(const char *label, char *mem, size_t n);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // --- search.h ---
 /**
  * @brief Perform linear search on an array.
@@ -1544,6 +1768,20 @@ int mathi_jump_search(int *arr, int n, int key);
  * @return Index of key if found, -1 otherwise
  */
 int mathi_interpolation_search(int *arr, int n, int key);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // --- sort.h ---
 /**
@@ -1596,6 +1834,20 @@ void mathi_heap_sort(int *arr, int n);
  */
 void mathi_counting_sort(int *arr, int n, int max);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // --- stats.h ---
 /**
  * @brief Compute the mean (average) of an array
@@ -1646,6 +1898,20 @@ int mathi_mode(int *arr, int n);
  */
 double mathi_percentile(int *arr, int n, double p);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // --- sys.h ---
 #ifdef __cplusplus
 extern "C" {
@@ -1670,6 +1936,20 @@ int mathi_set_env(const char *name, const char *value, int overwrite);
 #ifdef __cplusplus
 }
 #endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // --- timeutil.h ---
 #ifdef __cplusplus
@@ -1715,6 +1995,20 @@ int mathi_elapsed_seconds(long start, long end);
 #ifdef __cplusplus
 }
 #endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // --- util.h ---
 /**
@@ -1778,6 +2072,20 @@ void mathi_mem_copy(void *dest, const void *src, size_t size);
  * @param size Size of the memory blocks in bytes.
  */
 void mathi_mem_swap(void *a, void *b, size_t size);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // --- validator.h ---
 #ifdef __cplusplus
