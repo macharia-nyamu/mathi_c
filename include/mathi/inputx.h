@@ -57,6 +57,6 @@ InputResult mathi_get_hex(const char *prompt);
  * @param prompt Message to display
  * @return InputResult containing status and pointer to string
  */
-InputResult get_string(const char *prompt);
+InputResult mathi_get_string(const char *prompt);
 
 #endif // MATHI_INPUTX_H

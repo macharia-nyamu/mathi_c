@@ -312,44 +312,6 @@ int mathi_rle_compress(const unsigned char *restrict in, size_t len, unsigned ch
  */
 int mathi_rle_decompress(const unsigned char *restrict in, size_t len, unsigned char **out, size_t *out_len);
 
-// --- config.h ---
-/**
- * @brief Load a configuration file.
- * @param file_path Path to the config file.
- * @return 0 on success, non-zero on error.
- */
-int mathi_conf_load(const char *file_path);
-
-/**
- * @brief Get a string value from the configuration.
- * @param key Key to look up.
- * @return String value, or empty string if not found.
- */
-const char* mathi_conf_get_string(const char *key);
-
-/**
- * @brief Get an integer value from the configuration.
- * @param key Key to look up.
- * @param value Pointer to store the integer result.
- * @return 0 on success, non-zero on error.
- */
-int mathi_conf_get_int(const char *key, int *value);
-
-/**
- * @brief Set a string value in the configuration.
- * @param key Key to set.
- * @param value Value to assign.
- * @return 0 on success, non-zero on error.
- */
-int mathi_conf_set_string(const char *key, const char *value);
-
-/**
- * @brief Save the current configuration to file.
- * @param file_path Path to save the config file.
- * @return 0 on success, non-zero on error.
- */
-int mathi_conf_save(const char *file_path);
-
 // --- conversion.h ---
 /**
  * @brief Convert binary string to decimal integer.
@@ -1144,6 +1106,122 @@ int mathison_parse(const char *str, MathiJSON **json_obj);
  * @brief Serialize a JSON object (currently supports strings only).
  */
 int mathison_serialize(MathiJSON *json_obj, char **output);
+
+// --- config.h ---
+/**
+ * @brief Load a configuration file.
+ * @param file_path Path to the config file.
+ * @return 0 on success, non-zero on error.
+ */
+int mathi_conf_load(const char *file_path);
+
+/**
+ * @brief Save the current configuration to file.
+ * @param file_path Path to save the config file.
+ * @return 0 on success, non-zero on error.
+ */
+int mathi_conf_save(const char *file_path);
+
+/**
+ * @brief Get a string value from the configuration.
+ * @param key Key to look up.
+ * @return String value, or empty string if not found.
+ */
+const char* mathi_conf_get_string(const char *key);
+
+/**
+ * @brief Set a string value in the configuration.
+ * @param key Key to set.
+ * @param value Value to assign.
+ * @return 0 on success, non-zero on error.
+ */
+int mathi_conf_set_string(const char *key, const char *value);
+
+/**
+ * @brief Get an integer value from the configuration.
+ * @param key Key to look up.
+ * @param value Pointer to store the integer result.
+ * @return 0 on success, non-zero on error.
+ */
+int mathi_conf_get_int(const char *key, int *value);
+
+/**
+ * @brief Get a boolean value from the configuration.
+ * @param key Key to look up.
+ * @param value Pointer to store the boolean result.
+ * @return 0 on success, non-zero on error.
+ */
+int mathi_conf_get_bool(const char *key, bool *value);
+
+/**
+ * @brief Set a boolean value in the configuration.
+ * @param key Key to set.
+ * @param value Boolean value to assign.
+ * @return 0 on success, non-zero on error.
+ */
+int mathi_conf_set_bool(const char *key, bool value);
+
+/**
+ * @brief Get a floating-point (double) value from the configuration.
+ * @param key Key to look up.
+ * @param value Pointer to store the double result.
+ * @return 0 on success, non-zero on error.
+ */
+int mathi_conf_get_double(const char *key, double *value);
+
+/**
+ * @brief Set a floating-point (double) value in the configuration.
+ * @param key Key to set.
+ * @param value Double value to assign.
+ * @return 0 on success, non-zero on error.
+ */
+int mathi_conf_set_double(const char *key, double value);
+
+/**
+ * @brief Get an array from the configuration.
+ * @param key Key to look up.
+ * @param array Pointer to store the MathiJSON array.
+ * @return 0 on success, non-zero on error.
+ */
+int mathi_conf_get_array(const char *key, MathiJSON **array);
+
+/**
+ * @brief Set an array in the configuration.
+ * @param key Key to set.
+ * @param array MathiJSON array to assign.
+ * @return 0 on success, non-zero on error.
+ */
+int mathi_conf_set_array(const char *key, MathiJSON *array);
+
+/**
+ * @brief Get a nested object from the configuration.
+ * @param key Key to look up.
+ * @param object Pointer to store the MathiJSON object.
+ * @return 0 on success, non-zero on error.
+ */
+int mathi_conf_get_object(const char *key, MathiJSON **object);
+
+/**
+ * @brief Set a nested object in the configuration.
+ * @param key Key to set.
+ * @param object MathiJSON object to assign.
+ * @return 0 on success, non-zero on error.
+ */
+int mathi_conf_set_object(const char *key, MathiJSON *object);
+
+/**
+ * @brief Remove a key/value pair from the configuration.
+ * @param key Key to remove.
+ * @return 0 on success, non-zero on error.
+ */
+int mathi_conf_remove_key(const char *key);
+
+/**
+ * @brief Check if a key exists in the configuration.
+ * @param key Key to check.
+ * @return true if the key exists, false otherwise.
+ */
+bool mathi_conf_has_key(const char *key);
 
 // --- mathphy.h ---
 /**

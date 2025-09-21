@@ -289,9 +289,7 @@ bool mathison_has_key(MathiJSON *json_obj, const char *key) {
     return false;
 }
 
-
-// Basic parsing from string (supports string, number, boolean, null, empty array/object)
-int mathison_parse(const char *str, MathiJSON **json_obj) 
+int mathison_parse(const char *str, MathiJSON **json_obj, const char **endptr)
 {
     if (!str || !json_obj) return -1;
 
@@ -299,8 +297,8 @@ int mathison_parse(const char *str, MathiJSON **json_obj)
 
     if (*str == '"') { // string
         str++;
-        size_t len = 0;
         const char *start = str;
+        size_t len = 0;
         while (*str && *str != '"') { len++; str++; }
         if (*str != '"') return -1;
         char *s = malloc(len + 1);
@@ -309,51 +307,173 @@ int mathison_parse(const char *str, MathiJSON **json_obj)
         s[len] = '\0';
         *json_obj = mathison_new_string(s);
         free(s);
+        if (endptr) *endptr = str + 1;
         return *json_obj ? 0 : -1;
     }
-    else if (isdigit(*str) || *str == '-' || *str == '+') 
-    {
-        char *endptr;
-        double val = strtod(str, &endptr);
-        if (endptr == str) return -1;
+    else if (isdigit(*str) || *str == '-' || *str == '+') {
+        char *endptr_num;
+        double val = strtod(str, &endptr_num);
+        if (endptr_num == str) return -1;
         *json_obj = mathison_new_number(val);
+        if (endptr) *endptr = endptr_num;
         return *json_obj ? 0 : -1;
     }
-    else if (strncmp(str, "true", 4) == 0) 
-    {
+    else if (strncmp(str, "true", 4) == 0) {
         *json_obj = mathison_new_bool(true);
+        if (endptr) *endptr = str + 4;
         return *json_obj ? 0 : -1;
     }
-    else if (strncmp(str, "false", 5) == 0) 
-    {
+    else if (strncmp(str, "false", 5) == 0) {
         *json_obj = mathison_new_bool(false);
+        if (endptr) *endptr = str + 5;
         return *json_obj ? 0 : -1;
     }
-    else if (strncmp(str, "null", 4) == 0) 
-    {
+    else if (strncmp(str, "null", 4) == 0) {
         *json_obj = mathison_new_null();
+        if (endptr) *endptr = str + 4;
         return *json_obj ? 0 : -1;
     }
-    else if (*str == '[') return (*json_obj = mathison_new_array()) ? 0 : -1;
-    else if (*str == '{') return (*json_obj = mathison_new_object()) ? 0 : -1;
+    else if (*str == '[') { // array
+        str++;
+        MathiJSON *arr = mathison_new_array();
+        if (!arr) return -1;
 
-    return -1; // invalid / unsupported
+        while (*str) {
+            while (isspace(*str)) str++;
+            if (*str == ']') { str++; break; }
+
+            MathiJSON *item = NULL;
+            const char *next = NULL;
+            if (mathison_parse(str, &item, &next) != 0) { mathison_free(arr); return -1; }
+            mathison_append_array(arr, item);
+            str = next;
+            while (isspace(*str)) str++;
+            if (*str == ',') str++;
+        }
+
+        *json_obj = arr;
+        if (endptr) *endptr = str;
+        return 0;
+    }
+    else if (*str == '{') { // object
+        str++;
+        MathiJSON *obj = mathison_new_object();
+        if (!obj) return -1;
+
+        while (*str) {
+            while (isspace(*str)) str++;
+            if (*str == '}') { str++; break; }
+
+            if (*str != '"') { mathison_free(obj); return -1; }
+            str++;
+            const char *key_start = str;
+            size_t key_len = 0;
+            while (*str && *str != '"') { key_len++; str++; }
+            if (*str != '"') { mathison_free(obj); return -1; }
+            char key[key_len + 1];
+            strncpy(key, key_start, key_len);
+            key[key_len] = '\0';
+            str++; // skip closing quote
+
+            while (isspace(*str)) str++;
+            if (*str != ':') { mathison_free(obj); return -1; }
+            str++; // skip ':'
+
+            MathiJSON *value = NULL;
+            const char *next = NULL;
+            if (mathison_parse(str, &value, &next) != 0) { mathison_free(obj); return -1; }
+            mathison_set_value(obj, key, value);
+            str = next;
+
+            while (isspace(*str)) str++;
+            if (*str == ',') str++;
+        }
+
+        *json_obj = obj;
+        if (endptr) *endptr = str;
+        return 0;
+    }
+
+    return -1; // unsupported
 }
 
-// Serialize JSON string (currently only supports string)
+static void serialize_helper(MathiJSON *json, char **buf, size_t *len, size_t *cap) 
+{
+    if (!json || !buf || !len || !cap) return;
+
+    #define APPEND(s) \
+        do { \
+            size_t slen = strlen(s); \
+            if (*len + slen + 1 > *cap) { \
+                *cap = (*len + slen + 1) * 2; \
+                *buf = realloc(*buf, *cap); \
+            } \
+            strcpy(*buf + *len, s); \
+            *len += slen; \
+        } while(0)
+
+    char numbuf[64];
+
+    switch(json->type) 
+    {
+        case JSON_STRING:
+            APPEND("\"");
+            APPEND(json->data.str);
+            APPEND("\"");
+            break;
+
+        case JSON_NUMBER:
+            snprintf(numbuf, sizeof(numbuf), "%g", json->data.num);
+            APPEND(numbuf);
+            break;
+
+        case JSON_BOOL:
+            APPEND(json->data.boolean ? "true" : "false");
+            break;
+
+        case JSON_NULL:
+            APPEND("null");
+            break;
+
+        case JSON_ARRAY:
+            APPEND("[");
+            for (size_t i = 0; i < json->data.array.count; i++) 
+            {
+                if (i > 0) APPEND(",");
+                serialize_helper(json->data.array.items[i], buf, len, cap);
+            }
+            APPEND("]");
+            break;
+
+        case JSON_OBJECT:
+            APPEND("{");
+            for (size_t i = 0; i < json->data.object.count; i++) 
+            {
+                if (i > 0) APPEND(",");
+                APPEND("\"");
+                APPEND(json->data.object.keys[i]);
+                APPEND("\":");
+                serialize_helper(json->data.object.values[i], buf, len, cap);
+            }
+            APPEND("}");
+            break;
+    }
+
+    #undef APPEND
+}
+
+// Public serialize function
 int mathison_serialize(MathiJSON *json_obj, char **output) 
 {
     if (!json_obj || !output) return -1;
-    if (json_obj->type != JSON_STRING) return -1;
-
-    size_t len = strlen(json_obj->data.str) + 3; // quotes + null
-    *output = malloc(len);
+    size_t len = 0, cap = 128;
+    *output = malloc(cap);
     if (!*output) return -1;
+    (*output)[0] = '\0';
 
-    snprintf(*output, len, "\"%s\"", json_obj->data.str);
+    serialize_helper(json_obj, output, &len, &cap);
     return 0;
 }
-
 
 // Prepend value to array
 int mathison_prepend_array(MathiJSON *json_array, MathiJSON *value) 

@@ -2,10 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include "mathi/mathison.h"
+#include "mathi/config.h"
 
-void test_creation_and_types() 
+void test_json_creation_and_types() 
 {
-    printf("Test: Creation & Type Checks...\n");
+    printf("Test: MathiJSON Creation & Type Checks...\n");
 
     MathiJSON *obj = mathison_new_object();
     MathiJSON *arr = mathison_new_array();
@@ -31,118 +32,103 @@ void test_creation_and_types()
     mathison_free(nullv);
 }
 
-void test_strings_and_serialization() 
+void test_config_basic_types()
 {
-    printf("Test: Strings & Serialization...\n");
+    printf("\nTest: Config - Basic Types...\n");
 
-    MathiJSON *str = mathison_new_string("Mathi C Library");
-    char *out = NULL;
+    mathi_conf_set_string("app_name", "Mathi Library");
+    mathi_conf_set_int("max_users", 100);
+    mathi_conf_set_bool("debug_mode", 1);
+    mathi_conf_set_double("version", 1.23);
 
-    if (mathison_serialize(str, &out) == 0) 
-    {
-        printf("Serialized string: %s\n", out);
-        free(out);
-    }
+    const char *app_name = mathi_conf_get_string("app_name");
+    int max_users;
+    mathi_conf_get_int("max_users", &max_users);
+    bool debug_mode;
+    mathi_conf_get_bool("debug_mode", &debug_mode);
+    double version;
+    mathi_conf_get_double("version", &version);
 
-    printf("Raw string: %s\n", str->data.str);
-    mathison_free(str);
+    printf("app_name = %s\n", app_name);
+    printf("max_users = %d\n", max_users);
+    printf("debug_mode = %d\n", debug_mode);
+    printf("version = %.2f\n", version);
 }
 
-void test_objects_operations() 
+void test_config_arrays_and_objects()
 {
-    printf("Test: Object Operations...\n");
+    printf("\nTest: Config - Arrays & Objects...\n");
 
-    MathiJSON *obj = mathison_new_object();
-    MathiJSON *val1 = mathison_new_string("value1");
-    MathiJSON *val2 = mathison_new_number(42);
-
-    mathison_set_value(obj, "key1", val1);
-    mathison_set_value(obj, "key2", val2);
-
-    MathiJSON *retrieved = NULL;
-    if (mathison_get_value(obj, "key1", &retrieved) == 0) 
-    {
-        printf("Object key1 value: %s\n", retrieved->data.str);
-    }
-
-    if (mathison_get_value(obj, "key2", &retrieved) == 0) 
-    {
-        printf("Object key2 value: %.2f\n", retrieved->data.num);
-    }
-
-    printf("Has key1? %d\n", mathison_has_key(obj, "key1"));
-    mathison_remove_key(obj, "key1");
-    printf("Has key1 after removal? %d\n", mathison_has_key(obj, "key1"));
-
-    mathison_free(obj);
-}
-
-void test_arrays_and_swaps() 
-{
-    printf("Test: Array Operations & Swap...\n");
-
+    // Create an array
     MathiJSON *arr = mathison_new_array();
-    MathiJSON *a = mathison_new_string("first");
-    MathiJSON *b = mathison_new_string("second");
-    MathiJSON *c = mathison_new_number(3.14);
+    mathison_append_array(arr, mathison_new_string("first"));
+    mathison_append_array(arr, mathison_new_string("second"));
+    mathison_append_array(arr, mathison_new_number(42));
+    mathi_conf_set_array("my_array", arr);
 
-    mathison_append_array(arr, a);
-    mathison_append_array(arr, b);
-    mathison_append_array(arr, c);
-
-    printf("Original Array:\n");
-    for (size_t i = 0; i < mathison_array_count(arr); i++) 
+    // Retrieve and print array
+    MathiJSON *retrieved_arr = NULL;
+    if (mathi_conf_get_array("my_array", &retrieved_arr) == 0) 
     {
-        MathiJSON *elem = mathison_array_get(arr, i);
-        if (mathison_is_string(elem)) printf("  %zu: %s\n", i, elem->data.str);
-        if (mathison_is_number(elem)) printf("  %zu: %.2f\n", i, elem->data.num);
+        printf("Array contents:\n");
+        for (size_t i = 0; i < mathison_array_count(retrieved_arr); i++) 
+        {
+            MathiJSON *e = mathison_array_get(retrieved_arr, i);
+            if (mathison_is_string(e)) printf("  %zu: %s\n", i, e->data.str);
+            if (mathison_is_number(e)) printf("  %zu: %.2f\n", i, e->data.num);
+        }
     }
 
-    mathison_swap_array_items(arr, 0, 2);
-    printf("Array after swap 0 and 2:\n");
-    for (size_t i = 0; i < mathison_array_count(arr); i++) 
-    {
-        MathiJSON *elem = mathison_array_get(arr, i);
-        if (mathison_is_string(elem)) printf("  %zu: %s\n", i, elem->data.str);
-        if (mathison_is_number(elem)) printf("  %zu: %.2f\n", i, elem->data.num);
-    }
+    // Create an object
+    MathiJSON *obj = mathison_new_object();
+    mathison_set_value(obj, "username", mathison_new_string("macharia"));
+    mathison_set_value(obj, "score", mathison_new_number(99));
+    mathi_conf_set_object("player", obj);
 
-    mathison_free(arr);
+    // Retrieve and print object
+    MathiJSON *retrieved_obj = NULL;
+    if (mathi_conf_get_object("player", &retrieved_obj) == 0) 
+    {
+        MathiJSON *username = NULL;
+        MathiJSON *score = NULL;
+        mathison_get_value(retrieved_obj, "username", &username);
+        mathison_get_value(retrieved_obj, "score", &score);
+
+        printf("Object contents:\n");
+        if (username) printf("  username: %s\n", username->data.str);
+        if (score) printf("  score: %.2f\n", score->data.num);
+    }
 }
 
-void test_parse_basic() 
+void test_config_save_and_load()
 {
-    printf("Test: Parse Basic JSON...\n");
+    printf("\nTest: Config - Save & Load...\n");
 
-    MathiJSON *jstr = NULL, *jnum = NULL, *jtrue = NULL, *jfalse = NULL, *jnull = NULL;
+    const char *file = "test_config.json";
+    if (mathi_conf_save(file) == 0) 
+        printf("Saved configuration to '%s'\n", file);
+    
+    // Clear and reload
+    mathi_conf_remove_key("app_name");
+    mathi_conf_remove_key("max_users");
+    mathi_conf_remove_key("debug_mode");
+    mathi_conf_remove_key("version");
+    mathi_conf_remove_key("my_array");
+    mathi_conf_remove_key("player");
 
-    mathison_parse("\"Hello\"", &jstr);
-    mathison_parse("123.45", &jnum);
-    mathison_parse("true", &jtrue);
-    mathison_parse("false", &jfalse);
-    mathison_parse("null", &jnull);
+    if (mathi_conf_load(file) == 0) 
+        printf("Reloaded configuration from '%s'\n", file);
 
-    printf("Parsed string: %s\n", jstr->data.str);
-    printf("Parsed number: %.2f\n", jnum->data.num);
-    printf("Parsed boolean true: %d\n", jtrue->data.boolean);
-    printf("Parsed boolean false: %d\n", jfalse->data.boolean);
-    printf("Parsed null is null? %d\n", mathison_is_null(jnull));
-
-    mathison_free(jstr);
-    mathison_free(jnum);
-    mathison_free(jtrue);
-    mathison_free(jfalse);
-    mathison_free(jnull);
+    printf("After reload, app_name = %s\n", mathi_conf_get_string("app_name"));
 }
 
 int main() 
 {
-    test_creation_and_types();
-    test_strings_and_serialization();
-    test_objects_operations();
-    test_arrays_and_swaps();
-    test_parse_basic();
+    test_json_creation_and_types();
+    test_config_basic_types();
+    test_config_arrays_and_objects();
+    test_config_save_and_load();
 
-    printf("\nAll MathiJSON tests completed successfully!\n");
+    printf("\nAll MathiJSON + Config tests completed successfully!\n");
     return 0;
 }

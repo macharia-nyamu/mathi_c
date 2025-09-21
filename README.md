@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/macharia-nyamu/mathi_c/build.yml)](https://github.com/macharia-nyamu/mathi_c/actions)
 
-Mathi C is a modular C library collection providing algorithms, data structures, file and string utilities, math operations, and time/date utilities — all ready to plug into your C projects.
+Mathi C is a modular C library collection providing algorithms, data structures, file and string utilities, math operations, and time/date utilities.
 
 ---
 
