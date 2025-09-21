@@ -74,7 +74,6 @@ int mathi_matrix_inverse(double **matrix, double **inverse, int n);
  * @param b Pointer to the right-hand side vector.
  * @param x Pointer to the solution vector (output).
  * @param n Dimension of the system.
- * @return 0 on success, non-zero on failure (currently placeholder).
  */
 int mathi_linear_solver(double **A, double *b, double *x, int n);
 

@@ -4,8 +4,8 @@
 * Licensed under the MIT License. See LICENSE file in the project root for details.
 */
 
-#ifndef MATHI_MATH_H
-#define MATHI_MATH_H
+#ifndef MATHI_ALGO_H
+#define MATHI_ALGO_H
 
 #include <stddef.h>  // for size_t
 #include <stdlib.h>  // for abs()
@@ -59,4 +59,4 @@ int mathi_dgts_sum(int n);
  */
 int mathi_rt_digital(int n);
 
-#endif // MATHI_MATH_H
+#endif // MATHI_ALGO_H

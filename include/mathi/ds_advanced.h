@@ -95,8 +95,6 @@ int* mathi_graph_neighbors(Graph *g, int vertex, int *num_neighbors);
  */
 void   mathi_graph_free(Graph *g);
 
-
-
 /**
  * @struct Trie
  * @brief Opaque structure for a Trie (prefix tree).
